@@ -1,0 +1,126 @@
+@import "colors.less";
+
+@editor-font-size: 18px;
+@editor-line-height: 23px;
+
+.editor-wrapper {
+  height: 100%;
+  position: relative;
+}
+
+.status {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: @base2;
+  z-index: 1;
+}
+
+.editor {
+  position: relative;
+  height: 100%;
+  font-size: @editor-font-size;
+  line-height: @editor-line-height;
+  font-family: 'FantasqueSansMono';
+
+  .pane {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+
+    pre, pre > code {
+      margin: 0;
+      padding: 0;
+      padding-left: 1ch;
+      border-radius: 0;
+      border: 0;
+      word-wrap: normal;
+      white-space: pre;
+      font-size: @editor-font-size;
+      line-height: @editor-line-height;
+      font-family: 'FantasqueSansMono';
+    }
+
+    pre > code {
+      position: relative;
+      padding-bottom: 50%;
+      min-height: 100%;
+    }
+
+    .content {
+      position: relative;
+      padding-left: 7ch;
+      counter-reset: linenumber;
+      height: 100%;
+      width: 100%;
+      background: @base2;
+      overflow: visible;
+    }
+
+    .filename {
+      position: fixed;
+      bottom: 0;
+      height: 32px;
+      margin-left: 8ch;
+      margin-bottom: 15px;
+      background: darken(@base2, 10%);
+      padding: 5px 10px;
+      border-radius: 20px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      &:hover {
+        opacity: 0.3;
+      }
+    }
+
+    .cursor-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 8ch;
+
+      .cursor {
+        position: absolute;
+        width: 1ch;
+        height: @editor-line-height;
+        background: @base0;
+        -webkit-animation: blink 0.8s linear 0s infinite;
+        -moz-animation: blink 0.8s linear 0s infinite;
+        -ms-animation: blink 0.8s linear 0s infinite;
+        -o-animation: blink 0.8s linear 0s infinite;
+      }
+    }
+
+    .line-numbers-rows {
+      border-right: 1px solid darken(@base2, 10%);
+      position: absolute;
+      pointer-events: none;
+      background: @base2;
+      top: 0;
+      left: -7ch;
+      width: 7ch;
+      min-height: 100%;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .line-numbers-rows > span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber;
+    }
+
+    .line-numbers-rows > span:before {
+      content: counter(linenumber);
+      color: @base1;
+      display: block;
+      padding-right: 1ch;
+      text-align: right;
+    }
+  }
+}

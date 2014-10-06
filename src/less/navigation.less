@@ -1,0 +1,47 @@
+@import "colors.less";
+
+.navigation {
+  position: fixed;
+  width: 320px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  font-size: 16px;
+  padding: 20px;
+  background: @base2;
+
+  h1 {
+    font-size: 48px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  .list-group {
+    .list-group-item {
+      border-radius: 0;
+      border: 0;
+      margin: 0;
+      background: none;
+      padding: 10px 0;
+
+      .label-primary {
+        background: @violet;
+      }
+
+      .glyphicon {
+        color: @violet;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .navigation {
+    left: -320px;
+  }
+}

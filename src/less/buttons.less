@@ -1,0 +1,26 @@
+@import "colors.less";
+
+.btn {
+  border: 0;
+  border-radius: 30px;
+  background: darken(@base2, 5%);
+  &:hover {
+    background: darken(@base2, 10%);
+  }
+}
+
+.btn-primary {
+  background: @violet;
+  &:hover {
+    background: lighten(@violet, 5%);
+  }
+}
+
+.btn-circle {
+  padding: 0;
+  height: 60px;
+  width: 60px;
+  line-height: 65px;
+  border-radius: 100px;
+  color: @base0;
+}
