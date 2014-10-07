@@ -1,9 +1,10 @@
 var h = require('virtual-hyperscript')
   , _ = require('lodash')
+  , highlight = require('./highlight')
 
 function pane(file) {
   return h('div.pane', [
-    h('pre.content', file.content),
+    h('pre.content', highlight(file)),
     h('div.filename', file.file)
   ])
 }
