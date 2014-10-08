@@ -4,7 +4,9 @@ var h = require('virtual-hyperscript')
   , cursor = require('./cursor')
 
 function pane(file, cursors) {
-  return h('div.pane', [
+  return h('div.pane', {
+    'className': file.active ? '' : 'hidden'
+  }, [
     h('pre.content', highlight(file)),
     h('div.filename', file.file),
     h('div.cursors', _.map(cursors, function(c) {

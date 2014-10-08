@@ -16,7 +16,8 @@ if(!room) {
     'members': [],
     'files':   [],
     'cursors': [],
-    'status':  null
+    'status':  null,
+    'follow':  true
   })
 
   var conn = new Connection('ws://localhost:9000')

@@ -60,9 +60,10 @@ function code(state, data) {
     state.files.push(data)
   } else {
     var index = state.files.indexOf(file)
-    state.files[index] = data
+    state.files[index].content = data.content
   }
 
+  followFile(state, data.file)
   state.emit('change', state)
 }
 
@@ -81,7 +82,25 @@ function cursor(state, data) {
     state.cursors[index] = data
   }
 
+  followFile(state, data.file)
   state.emit('change', state)
+}
+
+function showFile(state, file) {
+  followFile(state, file.file, true)
+  state.emit('change', state)
+}
+
+function followFile(state, file, force) {
+  if(true === state.follow || true === force) {
+    for(i in state.files) {
+      if(file === state.files[i].file) {
+        state.files[i].active = true
+      } else {
+        state.files[i].active = false
+      }
+    }
+  }
 }
 
 module.exports = {
@@ -93,4 +112,5 @@ module.exports = {
 , 'changeNick': changeNick
 , 'code': code
 , 'cursor': cursor
+, 'showFile': showFile
 }
