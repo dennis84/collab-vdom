@@ -17,14 +17,14 @@ function members(state, data) {
 }
 
 function join(state, data) {
-  if(undefined === _.findWhere(state.members, {'id': data.id})) {
+  if(undefined === _.find(state.members, {'id': data.id})) {
     state.members.push({ id: data.id, name: data.id })
     state.emit('change', state)
   }
 }
 
 function leave(state, data) {
-  var member = _.findWhere(state.members, {'id': data.id})
+  var member = _.find(state.members, {'id': data.id})
   if (undefined !== member) {
     var index = state.members.indexOf(member)
     state.members.splice(index, 1)
@@ -33,19 +33,17 @@ function leave(state, data) {
 }
 
 function changeNick(state, data) {
-  var member = _.findWhere(state.members, {'id': data.id})
+  var member = _.find(state.members, {'id': data.id})
+    , cursor = _.find(state.cursors, {'sender': data.id})
     , change = false
 
-  if (undefined !== member) {
-    var index = state.members.indexOf(member)
-    state.members[index].name = data.name
+  if(undefined !== member) {
+    member.name = data.name
     change = true
   }
 
-  var cursor = _.findWhere(state.cursors, {'sender': data.sender})
   if(undefined !== cursor) {
-    var index = state.cursors.indexOf(cursor)
-    state.cursors[index].nickname = data.name
+    cursor.nickname = data.name
     change = true
   }
 
@@ -55,12 +53,11 @@ function changeNick(state, data) {
 }
 
 function code(state, data) {
-  var file = _.findWhere(state.files, {'file': data.file})
+  var file = _.find(state.files, {'file': data.file})
   if(undefined === file) {
     state.files.push(data)
   } else {
-    var index = state.files.indexOf(file)
-    state.files[index].content = data.content
+    file.content = data.content
   }
 
   followFile(state, data.file)
@@ -68,8 +65,8 @@ function code(state, data) {
 }
 
 function cursor(state, data) {
-  var cursor = _.findWhere(state.cursors, {'sender': data.sender})
-    , member = _.findWhere(state.members, {'id': data.sender})
+  var cursor = _.find(state.cursors, {'sender': data.sender})
+    , member = _.find(state.members, {'id': data.sender})
 
   if(undefined !== member) {
     data.nickname = member.name
@@ -78,8 +75,7 @@ function cursor(state, data) {
   if(undefined === cursor) {
     state.cursors.push(data)
   } else {
-    var index = state.cursors.indexOf(cursor)
-    state.cursors[index] = data
+    _.extend(cursor, data)
   }
 
   followFile(state, data.file)
@@ -87,19 +83,19 @@ function cursor(state, data) {
 }
 
 function showFile(state, file) {
-  followFile(state, file.file, true)
+  followFile(state, file, true)
   state.emit('change', state)
 }
 
-function followFile(state, file, force) {
+function followFile(state, filename, force) {
   if(true === state.follow || true === force) {
-    for(i in state.files) {
-      if(file === state.files[i].file) {
-        state.files[i].active = true
+    state.files.forEach(function(file) {
+      if(filename === file.file) {
+        file.active = true
       } else {
-        state.files[i].active = false
+        file.active = false
       }
-    }
+    })
   }
 }
 

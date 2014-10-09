@@ -5,7 +5,7 @@ var h = require('virtual-hyperscript')
 function makeFile(state, file) {
   return h('li.list-group-item', h('a', {
     'onclick': function(e) {
-      ctrl.showFile(state, file)
+      ctrl.showFile(state, file.file)
     }
   }, file.file))
 }
