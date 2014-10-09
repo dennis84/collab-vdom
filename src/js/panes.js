@@ -2,10 +2,18 @@ var h = require('virtual-hyperscript')
   , _ = require('lodash')
   , highlight = require('./highlight')
   , cursor = require('./cursor')
+  , scrollTo = require('./scroll-to')
+  , hook = require('./hook')
 
 function pane(file, cursors) {
   return h('div.pane', {
-    'className': file.active ? '' : 'hidden'
+    'className': file.active ? '' : 'hidden',
+    'scroll': hook(function(node) {
+      var firstCursor = _.first(cursors)
+      if(undefined !== firstCursor) {
+        scrollTo(node, firstCursor.y)
+      }
+    })
   }, [
     h('pre.content', highlight(file)),
     h('div.filename', file.file),
