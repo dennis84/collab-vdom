@@ -3,7 +3,7 @@ var h = require('virtual-hyperscript')
   , ctrl = require('./ctrl')
 
 function makeFile(state, file) {
-  return h('li.list-group-item', h('a', {
+  return h('li.list-group-item', h('a.link', {
     'onclick': function(e) {
       ctrl.showFile(state, file.file)
     }
@@ -28,7 +28,7 @@ module.exports = function(state) {
         h('span.label.label-primary.pull-right', String(state.members.length))
       ]),
       h('li.list-group-item',
-        h('a', {
+        h('a.link', {
           'attributes': {
             'data-toggle': 'modal',
             'data-target': '#change-nick'
