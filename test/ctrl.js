@@ -2,29 +2,29 @@ var assert = require('assert')
   , emitter = require('emitter-component')
   , ctrl = require('../src/js/ctrl.js')
 
-describe('ctrl', function(){
+describe('ctrl', function() {
   function Connection() {}
   Connection.prototype.send = function() {}
   var conn = new Connection
 
-  describe('opened', function(){
-    it('should change the state', function(){
+  describe('opened', function() {
+    it('should change the state', function() {
       var state = makeState()
       ctrl.opened(state, conn)
       assert.equal('open', state.status)
     })
   })
 
-  describe('closed', function(){
-    it('should change the state', function(){
+  describe('closed', function() {
+    it('should change the state', function() {
       var state = makeState()
       ctrl.closed(state, conn)
       assert.equal('closed', state.status)
     })
   })
 
-  describe('members', function(){
-    it('should add members', function(){
+  describe('members', function() {
+    it('should add members', function() {
       var state = makeState()
       members = ['foo', 'bar']
       ctrl.members(state, members)
@@ -32,8 +32,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('join', function(){
-    it('should add a member', function(){
+  describe('join', function() {
+    it('should add a member', function() {
       var state = makeState()
       ctrl.join(state, {'id': 1, 'name': 'foo'})
       assert.equal(1, state.members.length)
@@ -44,8 +44,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('leave', function(){
-    it('should remove a member', function(){
+  describe('leave', function() {
+    it('should remove a member', function() {
       var state = makeState()
       state.members = [
         {'id': 1, 'name': 'foo'}
@@ -61,8 +61,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('changeNick', function(){
-    it('should change the nickname', function(){
+  describe('changeNick', function() {
+    it('should change the nickname', function() {
       var state = makeState()
       state.members = [{'id': 1, 'name': 'foo'}]
       state.cursors = [{'sender': 1}]
@@ -72,8 +72,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('code', function(){
-    it('should add or update files', function(){
+  describe('code', function() {
+    it('should add or update files', function() {
       var state = makeState()
       ctrl.code(state, {'file': 'hello.js', 'content': ''})
       assert.equal(1, state.files.length)
@@ -85,8 +85,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('cursor', function(){
-    it('should add or update cursors', function(){
+  describe('cursor', function() {
+    it('should add or update cursors', function() {
       var state = makeState()
       state.members = [{'id': 1, 'name': 'foo', 'y': 1}]
       state.files = [{'file': 'hello.js', 'content': 'hello'}]
@@ -103,8 +103,8 @@ describe('ctrl', function(){
     })
   })
 
-  describe('showFile', function(){
-    it('should active/deactivate files', function(){
+  describe('showFile', function() {
+    it('should active/deactivate files', function() {
       var state = makeState()
       state.files = [
         {'file': 'foo.js', 'active': false}

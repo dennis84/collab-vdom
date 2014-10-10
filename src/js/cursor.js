@@ -2,11 +2,11 @@ var h = require('virtual-hyperscript')
   , _ = require('lodash')
 
 function getCursorTop(c) {
-  return (c.y - 1) * 23 + "px"
+  return (c.y - 1) * 23 + 'px'
 }
 
 function getCursorLeft(c) {
-  return c.x - 1 + "ch"
+  return c.x - 1 + 'ch'
 }
 
 module.exports = function(cursor) {

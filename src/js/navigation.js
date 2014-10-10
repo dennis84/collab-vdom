@@ -39,7 +39,7 @@ module.exports = function(state) {
     h('ul.list-group', _.map(state.members, function(member) {
       return h('li.list-group-item', member.name)
     })),
-    h('h3', "Files"),
+    h('h3', 'Files'),
     h('ul.list-group', _.map(state.files, function(file) {
       return makeFile(state, file)
     }))
