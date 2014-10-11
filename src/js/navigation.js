@@ -10,6 +10,19 @@ function makeFile(state, file) {
   }, file.file))
 }
 
+function makeMember(member) {
+  var icon = ''
+  if(member.coding) {
+    icon = 'glyphicon-pencil'
+  } else if(member.me) {
+    icon = 'glyphicon-user'
+  }
+
+  return h('li.list-group-item', [member.name,
+    h('i.glyphicon.pull-right', {'className': icon})
+  ])
+}
+
 module.exports = function(state) {
   return h('div.navigation', [
     h('ul.list-group', [
@@ -37,7 +50,7 @@ module.exports = function(state) {
     ]),
     h('h3', "Who's Online"),
     h('ul.list-group', _.map(state.members, function(member) {
-      return h('li.list-group-item', member.name)
+      return makeMember(member)
     })),
     h('h3', 'Files'),
     h('ul.list-group', _.map(state.files, function(file) {

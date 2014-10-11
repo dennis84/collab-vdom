@@ -70,6 +70,7 @@ function cursor(state, data) {
 
   if(undefined !== member) {
     data.nickname = member.name
+    member.coding = true
   }
 
   if(undefined === cursor) {
