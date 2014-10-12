@@ -1,11 +1,10 @@
 var h = require('virtual-hyperscript')
   , _ = require('lodash')
-  , ctrl = require('./ctrl')
 
-function makeFile(state, file) {
+function makeFile(file, events) {
   return h('li.list-group-item', h('a.link', {
     'onclick': function(e) {
-      ctrl.showFile(state, file.file)
+      events.showFile(file.file)
     }
   }, file.file))
 }
@@ -23,7 +22,7 @@ function makeMember(member) {
   ])
 }
 
-module.exports = function(state) {
+module.exports = function(state, events) {
   return h('div.navigation', [
     h('ul.list-group', [
       h('li.list-group-item', [
@@ -32,7 +31,7 @@ module.exports = function(state) {
           'type': 'checkbox',
           'checked': state.follow,
           'onclick': function(e) {
-            state.follow = !state.follow
+            events.follow(!state.follow)
           }
         })
       ]),
@@ -54,7 +53,7 @@ module.exports = function(state) {
     })),
     h('h3', 'Files'),
     h('ul.list-group', _.map(state.files, function(file) {
-      return makeFile(state, file)
+      return makeFile(file, events)
     }))
   ])
 }

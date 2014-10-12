@@ -12,37 +12,44 @@ if(!room) {
   var home = require('../html/home.html')
   document.body.innerHTML = home
 } else {
-  var state = emitter({
+  var state = {
     'members': [],
     'files':   [],
     'cursors': [],
     'status':  null,
     'follow':  true
-  })
+  }
+
+  var events = {
+    'showFile': update.bind(null, ctrl.showFile),
+    'follow': update.bind(null, ctrl.follow)
+  }
 
   var conn = new Connection('ws://localhost:9000')
-  conn.on('opened', ctrl.opened.bind(null, state))
-  conn.on('closed', ctrl.closed.bind(null, state))
-  conn.on('members', ctrl.members.bind(null, state))
-  conn.on('join', ctrl.join.bind(null, state))
-  conn.on('leave', ctrl.leave.bind(null, state))
-  conn.on('change-nick', ctrl.changeNick.bind(null, state))
-  conn.on('code', ctrl.code.bind(null, state))
-  conn.on('cursor', ctrl.cursor.bind(null, state))
-
-  var editor = require('./editor')
-    , tree = editor(state, conn)
+    , editor = require('./editor')
+    , tree = editor(state, events, conn)
     , node = createElement(tree)
   document.body.appendChild(node)
 
-  state.on('change', function(s) {
+  function update(fn) {
+    var args = [].slice.call(arguments).slice(1)
     raf(function () {
-      var updated = editor(s, conn)
+      state = fn.apply(null, [state].concat(args))
+      var updated = editor(state, events, conn)
         , patches = diff(tree, updated)
       node = patch(node, patches)
       tree = updated
     })
-  })
+  }
+
+  conn.on('opened', update.bind(null, ctrl.opened))
+  conn.on('closed', update.bind(null, ctrl.closed))
+  conn.on('members', update.bind(null, ctrl.members))
+  conn.on('join', update.bind(null, ctrl.join))
+  conn.on('leave', update.bind(null, ctrl.leave))
+  conn.on('change-nick', update.bind(null, ctrl.changeNick))
+  conn.on('code', update.bind(null, ctrl.code))
+  conn.on('cursor', update.bind(null, ctrl.cursor))
 
   conn.connect(room)
 }

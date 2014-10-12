@@ -9,7 +9,7 @@ module.exports = function(state, conn) {
             e.preventDefault()
             var nick = e.target.querySelector('input').value
             if('' !== nick) {
-              conn.send('change-nick', { 'name': nick })
+              conn.send('change-nick', {'name': nick})
             }
             $('#change-nick').modal('hide')
           }

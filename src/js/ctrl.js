@@ -3,24 +3,24 @@ var _ = require('lodash')
 function opened(state, conn) {
   conn.send('members')
   state.status = 'open'
-  state.emit('change', state)
+  return state
 }
 
 function closed(state, conn) {
   state.status = 'closed'
-  state.emit('change', state)
+  return state
 }
 
 function members(state, data) {
   state.members = data
-  state.emit('change', state)
+  return state
 }
 
 function join(state, data) {
   if(undefined === _.find(state.members, {'id': data.id})) {
     state.members.push({ id: data.id, name: data.id })
-    state.emit('change', state)
   }
+  return state
 }
 
 function leave(state, data) {
@@ -28,28 +28,23 @@ function leave(state, data) {
   if (undefined !== member) {
     var index = state.members.indexOf(member)
     state.members.splice(index, 1)
-    state.emit('change', state)
   }
+  return state
 }
 
 function changeNick(state, data) {
   var member = _.find(state.members, {'id': data.id})
     , cursor = _.find(state.cursors, {'sender': data.id})
-    , change = false
 
   if(undefined !== member) {
     member.name = data.name
-    change = true
   }
 
   if(undefined !== cursor) {
     cursor.nickname = data.name
-    change = true
   }
 
-  if(true === change) {
-    state.emit('change', state)
-  }
+  return state
 }
 
 function code(state, data) {
@@ -61,7 +56,7 @@ function code(state, data) {
   }
 
   followFile(state, data.file)
-  state.emit('change', state)
+  return state
 }
 
 function cursor(state, data) {
@@ -80,12 +75,12 @@ function cursor(state, data) {
   }
 
   followFile(state, data.file)
-  state.emit('change', state)
+  return state
 }
 
 function showFile(state, file) {
   followFile(state, file, true)
-  state.emit('change', state)
+  return state
 }
 
 function followFile(state, filename, force) {
@@ -100,6 +95,11 @@ function followFile(state, filename, force) {
   }
 }
 
+function follow(state, value) {
+  state.follow = value
+  return state
+}
+
 module.exports = {
   'opened': opened
 , 'closed': closed
@@ -110,4 +110,5 @@ module.exports = {
 , 'code': code
 , 'cursor': cursor
 , 'showFile': showFile
+, 'follow': follow
 }
