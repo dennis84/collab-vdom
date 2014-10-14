@@ -1,11 +1,10 @@
 var diff = require('virtual-dom/diff')
   , patch = require('virtual-dom/patch')
   , createElement = require('virtual-dom/create-element')
-  , emitter = require('emitter-component')
-  , ctrl = require('./ctrl')
-  , Connection = require('./connection')
   , raf = require('raf')
   , data = require('./data')
+  , ctrl = require('./ctrl')
+  , Connection = require('./connection')
 
 var room = location.hash.substring(1)
 
@@ -24,14 +23,14 @@ if(!room) {
     fn.apply(null, [state].concat(args))
   }
 
-  var conn = new Connection('ws://localhost:9000')
+  var conn = new Connection(require('./ws-url'))
     , editor = require('./editor')
     , tree = editor(state, events, conn)
     , node = createElement(tree)
   document.body.appendChild(node)
 
   state.on('change', function(current) {
-    raf(function () {
+    raf(function() {
       var updated = editor(current, events, conn)
         , patches = diff(tree, updated)
       node = patch(node, patches)
