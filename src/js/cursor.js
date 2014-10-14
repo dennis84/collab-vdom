@@ -11,7 +11,7 @@ function getCursorLeft(c) {
 
 module.exports = function(cursor) {
   return h('div.cursor-container', {
-    'title': cursor.nickname || cursor.sender,
+    'title': cursor.nick || cursor.id,
     'style': {
       'top': getCursorTop(cursor),
       'left': getCursorLeft(cursor)

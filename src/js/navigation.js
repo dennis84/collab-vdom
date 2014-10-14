@@ -4,9 +4,9 @@ var h = require('virtual-hyperscript')
 function makeFile(file, events) {
   return h('li.list-group-item', h('a.link', {
     'onclick': function(e) {
-      events.showFile(file.file)
+      events.showFile(file.id)
     }
-  }, file.file))
+  }, file.id))
 }
 
 function makeMember(member) {

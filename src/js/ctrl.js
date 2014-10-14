@@ -1,4 +1,5 @@
 var _ = require('lodash')
+  , d = require('./data')
 
 function opened(state, conn) {
   conn.send('members')
@@ -12,13 +13,13 @@ function closed(state, conn) {
 }
 
 function members(state, data) {
-  state.members = data
+  state.members = data.map(d.member)
   return state
 }
 
 function join(state, data) {
   if(undefined === _.find(state.members, {'id': data.id})) {
-    state.members.push({ id: data.id, name: data.id })
+    state.members.push(d.member({ id: data.id, name: data.id }))
   }
   return state
 }
@@ -34,23 +35,23 @@ function leave(state, data) {
 
 function changeNick(state, data) {
   var member = _.find(state.members, {'id': data.id})
-    , cursor = _.find(state.cursors, {'sender': data.id})
+    , cursor = _.find(state.cursors, {'id': data.id})
 
   if(undefined !== member) {
     member.name = data.name
   }
 
   if(undefined !== cursor) {
-    cursor.nickname = data.name
+    cursor.nick = data.name
   }
 
   return state
 }
 
 function code(state, data) {
-  var file = _.find(state.files, {'file': data.file})
+  var file = _.find(state.files, {'id': data.file})
   if(undefined === file) {
-    state.files.push(data)
+    state.files.push(d.file(data))
   } else {
     file.content = data.content
   }
@@ -60,16 +61,16 @@ function code(state, data) {
 }
 
 function cursor(state, data) {
-  var cursor = _.find(state.cursors, {'sender': data.sender})
+  var cursor = _.find(state.cursors, {'id': data.sender})
     , member = _.find(state.members, {'id': data.sender})
 
   if(undefined !== member) {
-    data.nickname = member.name
+    data.nick = member.name
     member.coding = true
   }
 
   if(undefined === cursor) {
-    state.cursors.push(data)
+    state.cursors.push(d.cursor(data))
   } else {
     _.extend(cursor, data)
   }
@@ -86,7 +87,7 @@ function showFile(state, file) {
 function followFile(state, filename, force) {
   if(true === state.follow || true === force) {
     state.files.forEach(function(file) {
-      if(filename === file.file) {
+      if(filename === file.id) {
         file.active = true
       } else {
         file.active = false

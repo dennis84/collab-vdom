@@ -5,6 +5,7 @@ var diff = require('virtual-dom/diff')
   , ctrl = require('./ctrl')
   , Connection = require('./connection')
   , raf = require('raf')
+  , data = require('./data')
 
 var room = location.hash.substring(1)
 
@@ -12,14 +13,7 @@ if(!room) {
   var home = require('../html/home.html')
   document.body.innerHTML = home
 } else {
-  var state = {
-    'members': [],
-    'files':   [],
-    'cursors': [],
-    'status':  null,
-    'follow':  true
-  }
-
+  var state = data.state()
   var events = {
     'showFile': update.bind(null, ctrl.showFile),
     'follow': update.bind(null, ctrl.follow)
