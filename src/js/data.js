@@ -1,11 +1,13 @@
+var emitter = require('emitter-component')
+
 function state() {
-  return {
+  return emitter({
     members: [],
     files: [],
     cursors: [],
     status: null,
     follow: true
-  }
+  })
 }
 
 function member(data) {

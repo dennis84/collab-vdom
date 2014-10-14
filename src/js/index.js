@@ -15,8 +15,13 @@ if(!room) {
 } else {
   var state = data.state()
   var events = {
-    'showFile': update.bind(null, ctrl.showFile),
-    'follow': update.bind(null, ctrl.follow)
+    'showFile': handle.bind(null, ctrl.showFile),
+    'follow': handle.bind(null, ctrl.follow)
+  }
+
+  function handle(fn) {
+    var args = [].slice.call(arguments).slice(1)
+    fn.apply(null, [state].concat(args))
   }
 
   var conn = new Connection('ws://localhost:9000')
@@ -25,25 +30,23 @@ if(!room) {
     , node = createElement(tree)
   document.body.appendChild(node)
 
-  function update(fn) {
-    var args = [].slice.call(arguments).slice(1)
+  state.on('change', function(current) {
     raf(function () {
-      state = fn.apply(null, [state].concat(args))
-      var updated = editor(state, events, conn)
+      var updated = editor(current, events, conn)
         , patches = diff(tree, updated)
       node = patch(node, patches)
       tree = updated
     })
-  }
+  })
 
-  conn.on('opened', update.bind(null, ctrl.opened))
-  conn.on('closed', update.bind(null, ctrl.closed))
-  conn.on('members', update.bind(null, ctrl.members))
-  conn.on('join', update.bind(null, ctrl.join))
-  conn.on('leave', update.bind(null, ctrl.leave))
-  conn.on('change-nick', update.bind(null, ctrl.changeNick))
-  conn.on('code', update.bind(null, ctrl.code))
-  conn.on('cursor', update.bind(null, ctrl.cursor))
+  conn.on('opened', handle.bind(null, ctrl.opened))
+  conn.on('closed', handle.bind(null, ctrl.closed))
+  conn.on('members', handle.bind(null, ctrl.members))
+  conn.on('join', handle.bind(null, ctrl.join))
+  conn.on('leave', handle.bind(null, ctrl.leave))
+  conn.on('change-nick', handle.bind(null, ctrl.changeNick))
+  conn.on('code', handle.bind(null, ctrl.code))
+  conn.on('cursor', handle.bind(null, ctrl.cursor))
 
   conn.connect(room)
 }

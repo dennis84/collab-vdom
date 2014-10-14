@@ -4,24 +4,25 @@ var _ = require('lodash')
 function opened(state, conn) {
   conn.send('members')
   state.status = 'open'
+  state.emit('change', state)
   return state
 }
 
 function closed(state, conn) {
   state.status = 'closed'
-  return state
+  state.emit('change', state)
 }
 
 function members(state, data) {
   state.members = data.map(d.member)
-  return state
+  state.emit('change', state)
 }
 
 function join(state, data) {
   if(undefined === _.find(state.members, {'id': data.id})) {
     state.members.push(d.member({ id: data.id, name: data.id }))
+    state.emit('change', state)
   }
-  return state
 }
 
 function leave(state, data) {
@@ -29,8 +30,8 @@ function leave(state, data) {
   if (undefined !== member) {
     var index = state.members.indexOf(member)
     state.members.splice(index, 1)
+    state.emit('change', state)
   }
-  return state
 }
 
 function changeNick(state, data) {
@@ -45,7 +46,7 @@ function changeNick(state, data) {
     cursor.nick = data.name
   }
 
-  return state
+  state.emit('change', state)
 }
 
 function code(state, data) {
@@ -57,7 +58,7 @@ function code(state, data) {
   }
 
   followFile(state, data.file)
-  return state
+  state.emit('change', state)
 }
 
 function cursor(state, data) {
@@ -76,12 +77,17 @@ function cursor(state, data) {
   }
 
   followFile(state, data.file)
-  return state
+  state.emit('change', state)
 }
 
 function showFile(state, file) {
   followFile(state, file, true)
-  return state
+  state.emit('change', state)
+}
+
+function follow(state, value) {
+  state.follow = value
+  state.emit('change', state)
 }
 
 function followFile(state, filename, force) {
@@ -94,11 +100,6 @@ function followFile(state, filename, force) {
       }
     })
   }
-}
-
-function follow(state, value) {
-  state.follow = value
-  return state
 }
 
 module.exports = {
