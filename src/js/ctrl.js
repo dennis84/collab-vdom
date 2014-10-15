@@ -5,7 +5,6 @@ function opened(state, conn) {
   conn.send('members')
   state.status = 'open'
   state.emit('change', state)
-  return state
 }
 
 function closed(state, conn) {
@@ -57,7 +56,7 @@ function code(state, data) {
     file.content = data.content
   }
 
-  followFile(state, data.file)
+  activateFile(state, data.file)
   state.emit('change', state)
 }
 
@@ -73,15 +72,15 @@ function cursor(state, data) {
   if(undefined === cursor) {
     state.cursors.push(d.cursor(data))
   } else {
-    _.extend(cursor, data)
+    _.extend(cursor, d.cursor(data))
   }
 
-  followFile(state, data.file)
+  activateFile(state, data.file)
   state.emit('change', state)
 }
 
 function showFile(state, file) {
-  followFile(state, file, true)
+  activateFile(state, file, true)
   state.emit('change', state)
 }
 
@@ -90,10 +89,10 @@ function follow(state, value) {
   state.emit('change', state)
 }
 
-function followFile(state, filename, force) {
+function activateFile(state, id, force) {
   if(true === state.follow || true === force) {
     state.files.forEach(function(file) {
-      if(filename === file.id) {
+      if(id === file.id) {
         file.active = true
       } else {
         file.active = false
