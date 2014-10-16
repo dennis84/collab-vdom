@@ -3,7 +3,6 @@ var h = require('virtual-hyperscript')
   , navigation = require('./navigation')
   , changeNick = require('./change-nick')
   , panes = require('./panes')
-  , scrollTo = require('./scroll-to')
 
 function statusScreen(state) {
   if('open' === state.status && _.isEmpty(state.files)) {
