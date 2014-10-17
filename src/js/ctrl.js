@@ -1,6 +1,7 @@
 var _ = require('lodash')
   , d = require('./data')
 
+
 function opened(state, conn) {
   conn.send('members')
   state.status = 'open'
