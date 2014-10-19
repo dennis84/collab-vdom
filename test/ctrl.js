@@ -92,13 +92,13 @@ describe('ctrl', function() {
       state.members = [d.member({'id': 1, 'name': 'foo', 'y': 1})]
       state.files = [d.file({'file': 'hello.js', 'content': 'hello'})]
 
-      ctrl.cursor(state, {'sender': 1, 'file': 'hello.js', 'y': 1})
+      ctrl.cursor(state, {'file': 'hello.js', 'y': 1}, 1)
       assert.equal('foo', state.cursors[0].nick)
       assert.equal(1, state.cursors.length)
-      ctrl.cursor(state, {'sender': 2, 'file': 'hello.js', 'y': 1})
+      ctrl.cursor(state, {'file': 'hello.js', 'y': 1}, 2)
       assert.equal(2, state.cursors.length)
       assert.equal(1, state.cursors[1].y)
-      ctrl.cursor(state, {'sender': 2, 'file': 'world.js', 'y': 2})
+      ctrl.cursor(state, {'file': 'world.js', 'y': 2}, 2)
       assert.equal(2, state.cursors.length)
       assert.equal(2, state.cursors[1].y)
     })

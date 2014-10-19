@@ -60,9 +60,11 @@ function code(state, data) {
   state.emit('change', state)
 }
 
-function cursor(state, data) {
-  var cursor = _.find(state.cursors, {'id': data.sender})
-    , member = _.find(state.members, {'id': data.sender})
+function cursor(state, data, sender) {
+  var cursor = _.find(state.cursors, {'id': sender})
+    , member = _.find(state.members, {'id': sender})
+
+  data.sender = sender
 
   if(undefined !== member) {
     data.nick = member.name

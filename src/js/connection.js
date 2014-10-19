@@ -22,7 +22,15 @@ Connection.prototype.connect = function(room) {
     var pos = e.data.search(/[{\[]/)
       , evt = e.data.substring(0, pos)
       , data = e.data.substring(pos)
-    connection.emit(evt, JSON.parse(data))
+      , sender = undefined
+
+    if(-1 != evt.indexOf('@')) {
+      var info = evt.split('@')
+      evt = info[0]
+      sender = info[1]
+    }
+
+    connection.emit(evt, JSON.parse(data), sender)
   }
 }
 
