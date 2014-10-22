@@ -1,5 +1,7 @@
 var h = require('virtual-hyperscript')
   , _ = require('lodash')
+  , Modal = require('./modal')
+  , changeNick = require('./change-nick')
 
 function makeFile(file, events) {
   return h('li.list-group-item', h('a.link', {
@@ -22,7 +24,7 @@ function makeMember(member) {
   ])
 }
 
-module.exports = function(state, events) {
+module.exports = function(state, events, conn) {
   return h('div.navigation', [
     h('ul.list-group', [
       h('li.list-group-item', [
@@ -41,9 +43,9 @@ module.exports = function(state, events) {
       ]),
       h('li.list-group-item',
         h('a.link', {
-          'attributes': {
-            'data-toggle': 'modal',
-            'data-target': '#change-nick'
+          'onclick': function(e) {
+            var modal = new Modal(changeNick.bind(null, conn))
+            modal.show()
           }
         }, 'Change Nickname'))
     ]),

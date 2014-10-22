@@ -1,8 +1,25 @@
 var h = require('virtual-hyperscript')
 
-module.exports = function(state, conn) {
-  return h('div.modal.fade.bs-modal-sm#change-nick',
-    h('div.modal-dialog.modal-sm',
+module.exports = function(conn, modal) {
+  return h('div', [
+    makeModal(conn, modal),
+    makeBackdrop()
+  ])
+}
+
+function makeBackdrop() {
+  return h('div.modal-backdrop.fade.in')
+}
+
+function makeModal(conn, modal) {
+  return h('div.modal.fade.in.bs-modal-sm#change-nick', {
+    'style': {'display': 'block'},
+    'onclick': function(e) {
+      if('change-nick' === e.target.id) {
+        modal.hide()
+      }
+    }
+  }, h('div.modal-dialog.modal-sm',
       h('div.modal-content',
         h('form', {
           'onsubmit': function(e) {
@@ -10,8 +27,8 @@ module.exports = function(state, conn) {
             var nick = e.target.querySelector('input').value
             if('' !== nick) {
               conn.send('change-nick', {'name': nick})
+              modal.hide()
             }
-            $('#change-nick').modal('hide')
           }
         }, [
           h('div.modal-body', [
@@ -21,8 +38,8 @@ module.exports = function(state, conn) {
           h('div.modal-footer', [
             h('button.btn.btn-default', {
               'type': 'button',
-              'attributes': {
-                'data-dismiss': 'modal'
+              'onclick': function(e) {
+                modal.hide()
               }
             }, 'Close'),
             h('button.btn.btn-primary', {'type': 'submit'}, 'Apply')

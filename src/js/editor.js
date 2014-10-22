@@ -16,11 +16,10 @@ function statusScreen(state) {
 
 module.exports = function(state, events, conn) {
   return h('div.layout', [
-    navigation(state, events),
+    navigation(state, events, conn),
     h('div.editor-wrapper', [
       statusScreen(state),
       panes(state)
-    ]),
-    changeNick(state, conn)
+    ])
   ])
 }
