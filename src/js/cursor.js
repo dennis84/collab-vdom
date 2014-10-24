@@ -1,5 +1,4 @@
 var h = require('virtual-hyperscript')
-  , _ = require('lodash')
 
 function getCursorTop(c) {
   return (c.y - 1) * 23 + 'px'
@@ -15,9 +14,6 @@ module.exports = function(cursor) {
     'style': {
       'top': getCursorTop(cursor),
       'left': getCursorLeft(cursor)
-    },
-    'attributes': {
-      'data-placement': 'top'
     }
   }, h('div.cursor'))
 }
