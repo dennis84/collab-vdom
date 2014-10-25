@@ -1,7 +1,18 @@
-@import "colors.less";
-
 @editor-font-size: 18px;
 @editor-line-height: 23px;
+
+.layout {
+  overflow: hidden;
+  height: 100%;
+  padding-left: 320px;
+  left: 0;
+}
+
+@media (max-width: 767px) {
+  .layout {
+    padding-left: 0px;
+  }
+}
 
 .editor-wrapper {
   height: 100%;
