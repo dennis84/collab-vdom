@@ -23,7 +23,8 @@ function file(data) {
   return {
     id: data.file,
     content: data.content,
-    lang: data.lang
+    lang: data.lang,
+    active: false
   }
 }
 

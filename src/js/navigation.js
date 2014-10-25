@@ -5,6 +5,7 @@ var h = require('virtual-hyperscript')
 
 function makeFile(file, events) {
   return h('li.list-group-item', h('a.link', {
+    'className': file.active ? 'active' : '',
     'onclick': function(e) {
       events.showFile(file.id)
     }
@@ -56,6 +57,6 @@ module.exports = function(state, events, conn) {
     h('h3', 'Files'),
     h('ul.list-group', _.map(state.files, function(file) {
       return makeFile(file, events)
-    }))
+    }).reverse())
   ])
 }
