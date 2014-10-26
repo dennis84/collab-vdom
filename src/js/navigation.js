@@ -1,5 +1,4 @@
 var h = require('virtual-hyperscript')
-  , _ = require('lodash')
   , Modal = require('./modal')
   , changeNick = require('./change-nick')
 
@@ -51,11 +50,11 @@ module.exports = function(state, events, conn) {
         }, 'Change Nickname'))
     ]),
     h('h3', "Who's Online"),
-    h('ul.list-group', _.map(state.members, function(member) {
+    h('ul.list-group', state.members.map(function(member) {
       return makeMember(member)
     })),
     h('h3', 'Files'),
-    h('ul.list-group', _.map(state.files, function(file) {
+    h('ul.list-group', state.files.map(function(file) {
       return makeFile(file, events)
     }).reverse())
   ])

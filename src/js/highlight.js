@@ -1,5 +1,4 @@
 var h = require('virtual-hyperscript')
-  , _ = require('lodash')
   , hljs = require('highlight.js')
 
 function InnerHtml(value) {
@@ -12,7 +11,7 @@ InnerHtml.prototype.hook = function(node, propName) {
 
 function makeLineNumbers(code) {
   var lines = code.split("\n")
-  return h('span.line-numbers-rows', _.map(lines, function(ln) {
+  return h('span.line-numbers-rows', lines.map(function(ln) {
     return h('span')
   }))
 }

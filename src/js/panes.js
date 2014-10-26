@@ -17,15 +17,15 @@ function pane(file, cursors, follow) {
   }, [
     h('pre.content', highlight(file)),
     h('div.filename', file.id),
-    h('div.cursors', _.map(cursors, function(c) {
+    h('div.cursors', cursors.map(function(c) {
       return cursor(c)
     }))
   ])
 }
 
 module.exports = function(state) {
-  return h('div.editor', _.map(state.files, function(file) {
-    return pane(file, _.filter(state.cursors, function(cursor) {
+  return h('div.editor', state.files.map(function(file) {
+    return pane(file, state.cursors.filter(function(cursor) {
       return cursor.file === file.id
     }), state.follow)
   }))
