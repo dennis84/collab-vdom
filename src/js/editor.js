@@ -1,11 +1,9 @@
 var h = require('virtual-hyperscript')
-  , _ = require('lodash')
   , navigation = require('./navigation')
-  , changeNick = require('./change-nick')
   , panes = require('./panes')
 
 function statusScreen(state) {
-  if('open' === state.status && _.isEmpty(state.files)) {
+  if('open' === state.status && 0 === state.files.length) {
     return require('./status-opened')
   }
 

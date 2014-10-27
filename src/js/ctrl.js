@@ -26,7 +26,7 @@ function join(state, data) {
 
 function leave(state, data) {
   var member = _.find(state.members, {'id': data.id})
-  if (undefined !== member) {
+  if(undefined !== member) {
     var index = state.members.indexOf(member)
     state.members.splice(index, 1)
     state.emit('change', state)

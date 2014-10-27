@@ -12,7 +12,6 @@ gulp.task('js', function() {
     .pipe(browserify({
       transform: stringify(['.html'])
     })).on('error', gutil.log)
-    .pipe(concat('index.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./assets/js'))
 })
@@ -26,10 +25,7 @@ gulp.task('less', function() {
 })
 
 gulp.task('watch', function() {
-  gulp.watch([
-    'index.html',
-    'src/**',
-  ], ['js', 'less'])
+  gulp.watch(['index.html', 'src/**'], ['js', 'less'])
 })
 
 gulp.task('default', ['js', 'less', 'watch'])
