@@ -1,8 +1,12 @@
 var createElement = require('virtual-dom/create-element')
+  , h = require('virtual-hyperscript')
 
 function Modal(view) {
-  this.view = view(this)
   this.node = null
+  this.view = h('div', [
+    view(this),
+    h('div.modal-backdrop.fade.in')
+  ])
 }
 
 Modal.prototype.show = function() {

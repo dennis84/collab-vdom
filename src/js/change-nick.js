@@ -1,19 +1,7 @@
 var h = require('virtual-hyperscript')
 
 module.exports = function(conn, modal) {
-  return h('div', [
-    makeModal(conn, modal),
-    makeBackdrop()
-  ])
-}
-
-function makeBackdrop() {
-  return h('div.modal-backdrop.fade.in')
-}
-
-function makeModal(conn, modal) {
   return h('div.modal.fade.in.bs-modal-sm#change-nick', {
-    'style': {'display': 'block'},
     'onclick': function(e) {
       if('change-nick' === e.target.id) {
         modal.hide()
