@@ -1,13 +1,6 @@
 var h = require('virtual-hyperscript')
   , hljs = require('highlight.js')
-
-function InnerHtml(value) {
-  this.value = value
-}
-
-InnerHtml.prototype.hook = function(node, propName) {
-  node.innerHTML = this.value
-}
+  , hook = require('./hook')
 
 function makeLineNumbers(code) {
   var lines = code.split("\n")
@@ -25,9 +18,12 @@ function highlightCode(file) {
 }
 
 module.exports = function(file) {
-  var code = highlightCode(file)
   return h('code.hljs', [
-    h('span', {'html': new InnerHtml(code.value)}),
+    h('span', {
+      'html': hook(function(node) {
+        node.innerHTML = highlightCode(file).value
+      })
+    }),
     makeLineNumbers(file.content)
   ])
 }
