@@ -1,13 +1,8 @@
 var h = require('virtual-hyperscript')
 
 module.exports = function(conn, modal) {
-  return h('div.modal.fade.in.bs-modal-sm#change-nick', {
-    'onclick': function(e) {
-      if('change-nick' === e.target.id) {
-        modal.hide()
-      }
-    }
-  }, h('div.modal-dialog.modal-sm',
+  return h('div.modal.fade.in.bs-modal-sm#change-nick',
+    h('div.modal-dialog.modal-sm',
       h('div.modal-content',
         h('form', {
           'onsubmit': function(e) {

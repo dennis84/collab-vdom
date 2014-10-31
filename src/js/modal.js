@@ -10,7 +10,14 @@ function Modal(view) {
 }
 
 Modal.prototype.show = function() {
+  var modal = this
   this.node = createElement(this.view)
+  this.node.addEventListener('click', function(e) {
+    if(e.target.classList.contains('modal')) {
+      modal.hide()
+    }
+  })
+
   document.body.appendChild(this.node)
 }
 
