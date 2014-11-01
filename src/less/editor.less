@@ -104,6 +104,26 @@
         -ms-animation: blink 0.8s linear 0s infinite;
         -o-animation: blink 0.8s linear 0s infinite;
       }
+
+      .tooltip {
+        left: 10px;
+        opacity: 0;
+        pointer-events: none;
+
+        .tooltip-arrow {
+          border-right-color: @base03;
+        }
+
+        .tooltip-inner {
+          background: @base03;
+          text-shadow: 0 -1px darken(@base03, 20%);
+        }
+      }
+
+      &:hover .tooltip {
+        opacity: 1;
+        transition: opacity 0.2s ease-in;
+      }
     }
 
     .line-numbers-rows {

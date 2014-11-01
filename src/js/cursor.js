@@ -15,5 +15,11 @@ module.exports = function(cursor) {
       'top': getCursorTop(cursor),
       'left': getCursorLeft(cursor)
     }
-  }, h('div.cursor'))
+  }, [
+    h('div.tooltip.right', [
+      h('div.tooltip-arrow'),
+      h('div.tooltip-inner', cursor.nick || cursor.id)
+    ]),
+    h('div.cursor')
+  ])
 }
