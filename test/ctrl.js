@@ -36,12 +36,14 @@ describe('ctrl', function() {
   describe('join', function() {
     it('should add a member', function() {
       var state = d.state()
-      ctrl.join(state, {'id': 1, 'name': 'foo'})
+      ctrl.join(state, {'id': 1})
       assert.equal(1, state.members.length)
-      ctrl.join(state, {'id': 1, 'name': 'bar'})
+      assert.equal(1, state.members[0].name)
+      ctrl.join(state, {'id': 1})
       assert.equal(1, state.members.length)
-      ctrl.join(state, {'id': 2, 'name': 'baz'})
+      ctrl.join(state, {'id': 2, 'name': 'foo'})
       assert.equal(2, state.members.length)
+      assert.equal('foo', state.members[1].name)
     })
   })
 

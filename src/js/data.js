@@ -13,7 +13,7 @@ function state() {
 function member(data) {
   return {
     id: data.id,
-    name: data.name,
+    name: data.name || data.id,
     me: data.me || false,
     coding: false
   }

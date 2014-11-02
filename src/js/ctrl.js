@@ -19,7 +19,7 @@ function members(state, data) {
 
 function join(state, data) {
   if(undefined === _.find(state.members, {'id': data.id})) {
-    state.members.push(d.member({ id: data.id, name: data.id }))
+    state.members.push(d.member(data))
     state.emit('change', state)
   }
 }
