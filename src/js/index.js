@@ -42,6 +42,9 @@ if(!room) {
   conn.on('change-nick', ctrl.changeNick.bind(null, state))
   conn.on('code', ctrl.code.bind(null, state))
   conn.on('cursor', _.debounce(ctrl.cursor.bind(null, state), 100))
-
   conn.connect(room)
+
+  setInterval(function() {
+    conn.send('ping')
+  }, 30000)
 }

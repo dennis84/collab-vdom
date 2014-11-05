@@ -36,7 +36,7 @@ Connection.prototype.connect = function(room) {
 
 Connection.prototype.send = function(e, data) {
   var message = e
-  if (undefined !== data) {
+  if(undefined !== data) {
     message += JSON.stringify(data)
   }
 
