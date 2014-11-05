@@ -15,13 +15,8 @@ if(!room) {
 } else {
   var state = data.state()
   var events = {
-    'showFile': handle.bind(null, ctrl.showFile),
-    'follow': handle.bind(null, ctrl.follow)
-  }
-
-  function handle(fn) {
-    var args = [].slice.call(arguments).slice(1)
-    fn.apply(null, [state].concat(args))
+    'showFile': ctrl.showFile.bind(null, state),
+    'follow': ctrl.showFile.bind(null, state)
   }
 
   var conn = new Connection(require('./ws-url'))
@@ -39,14 +34,14 @@ if(!room) {
     })
   })
 
-  conn.on('opened', handle.bind(null, ctrl.opened))
-  conn.on('closed', handle.bind(null, ctrl.closed))
-  conn.on('members', handle.bind(null, ctrl.members))
-  conn.on('join', handle.bind(null, ctrl.join))
-  conn.on('leave', handle.bind(null, ctrl.leave))
-  conn.on('change-nick', handle.bind(null, ctrl.changeNick))
-  conn.on('code', handle.bind(null, ctrl.code))
-  conn.on('cursor', _.debounce(handle.bind(null, ctrl.cursor), 100))
+  conn.on('opened', ctrl.opened.bind(null, state))
+  conn.on('closed', ctrl.closed.bind(null, state))
+  conn.on('members', ctrl.members.bind(null, state))
+  conn.on('join', ctrl.join.bind(null, state))
+  conn.on('leave', ctrl.leave.bind(null, state))
+  conn.on('change-nick', ctrl.changeNick.bind(null, state))
+  conn.on('code', ctrl.code.bind(null, state))
+  conn.on('cursor', _.debounce(ctrl.cursor.bind(null, state), 100))
 
   conn.connect(room)
 }
