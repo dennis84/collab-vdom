@@ -1,7 +1,7 @@
 var assert = require('assert')
   , emitter = require('emitter-component')
-  , ctrl = require('../src/js/ctrl.js')
-  , d = require('../src/js/data.js')
+  , ctrl = require('../src/js/ctrl')
+  , d = require('../src/js/data')
 
 describe('ctrl', function() {
   function Connection() {}
