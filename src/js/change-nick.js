@@ -7,7 +7,7 @@ module.exports = function(conn, modal) {
         h('form', {
           'onsubmit': function(e) {
             e.preventDefault()
-            var nick = e.target.querySelector('input').value
+            var nick = e.target.querySelector('input').value.trim()
             if('' !== nick) {
               conn.send('change-nick', {'name': nick})
               modal.hide()
