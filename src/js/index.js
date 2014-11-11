@@ -1,6 +1,7 @@
 var diff = require('virtual-dom/diff')
   , patch = require('virtual-dom/patch')
   , createElement = require('virtual-dom/create-element')
+  , DiffMatchPatch = require('diff-match-patch')
   , _ = require('lodash')
   , raf = require('raf')
   , data = require('./data')
@@ -13,6 +14,7 @@ if(!room) {
   var home = require('../html/home.html')
   document.body.innerHTML = home
 } else {
+  var dmp = new DiffMatchPatch
   var state = data.state()
   var events = {
     'showFile': ctrl.showFile.bind(null, state),
@@ -40,7 +42,7 @@ if(!room) {
   conn.on('join', ctrl.join.bind(null, state))
   conn.on('leave', ctrl.leave.bind(null, state))
   conn.on('change-nick', ctrl.changeNick.bind(null, state))
-  conn.on('code', ctrl.code.bind(null, state))
+  conn.on('code', ctrl.code.bind(null, dmp, state))
   conn.on('cursor', _.debounce(ctrl.cursor.bind(null, state), 100))
   conn.connect(room)
 

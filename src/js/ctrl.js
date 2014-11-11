@@ -26,11 +26,19 @@ function join(state, data) {
 
 function leave(state, data) {
   var member = _.find(state.members, {'id': data.id})
+    , cursor = _.find(state.cursors, {'id': data.id})
+
   if(undefined !== member) {
     var index = state.members.indexOf(member)
     state.members.splice(index, 1)
-    state.emit('change', state)
   }
+
+  if(undefined !== cursor) {
+    var index = state.cursors.indexOf(cursor)
+    state.cursors.splice(index, 1)
+  }
+
+  state.emit('change', state)
 }
 
 function changeNick(state, data) {
@@ -48,8 +56,17 @@ function changeNick(state, data) {
   state.emit('change', state)
 }
 
-function code(state, data) {
+function code(dmp, state, data) {
   var file = _.find(state.files, {'id': data.file})
+    , patchHeader = /^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/m
+
+  if(patchHeader.test(data.content)) {
+    var content = undefined !== file ? file.content : ''
+      , patches = dmp.patch_fromText(data.content)
+      , result = dmp.patch_apply(patches, content)
+    data.content = result[0]
+  }
+
   if(undefined === file) {
     state.files.push(d.file(data))
   } else {
