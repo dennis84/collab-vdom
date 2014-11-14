@@ -56,16 +56,9 @@ function changeNick(state, data) {
   state.emit('change', state)
 }
 
-function code(dmp, state, data) {
+function code(patch, state, data) {
   var file = _.find(state.files, {'id': data.file})
-    , patchHeader = /^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/m
-
-  if(patchHeader.test(data.content)) {
-    var content = undefined !== file ? file.content : ''
-      , patches = dmp.patch_fromText(data.content)
-      , result = dmp.patch_apply(patches, content)
-    data.content = result[0]
-  }
+  data.content = patch.patch((file || {}).content || '', data.content)
 
   if(undefined === file) {
     state.files.push(d.file(data))

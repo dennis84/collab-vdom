@@ -1,6 +1,7 @@
 var assert = require('assert')
   , emitter = require('emitter-component')
   , DiffMatchPatch = require('diff-match-patch')
+  , Patch = require('../src/js/patch')
   , ctrl = require('../src/js/ctrl')
   , d = require('../src/js/data')
 
@@ -83,27 +84,28 @@ describe('ctrl', function() {
   describe('code', function() {
     it('should add or update files', function() {
       var state = d.state()
-        , dmp = new DiffMatchPatch
+        , patch = new Patch
 
-      ctrl.code(dmp, state, {'file': 'hello.js', 'content': ''})
+      ctrl.code(patch, state, {'file': 'hello.js', 'content': ''})
       assert.equal(1, state.files.length)
-      ctrl.code(dmp, state, {'file': 'hello.js', 'content': 'hello'})
+      ctrl.code(patch, state, {'file': 'hello.js', 'content': 'hello'})
       assert.equal(1, state.files.length)
       assert.equal('hello', state.files[0].content)
-      ctrl.code(dmp, state, {'file': 'world.js', 'content': 'world'})
+      ctrl.code(patch, state, {'file': 'world.js', 'content': 'world'})
       assert.equal('world', state.files[1].content)
     })
 
     it('should patch files', function() {
       var state = d.state()
         , dmp = new DiffMatchPatch
+        , patch = new Patch(dmp)
 
-      ctrl.code(dmp, state, {'file': 'hello.js', 'content': 'foo'})
+      ctrl.code(patch, state, {'file': 'hello.js', 'content': 'foo'})
 
       var patches = dmp.patch_make('foo', 'Foo')
         , text = dmp.patch_toText(patches)
 
-      ctrl.code(dmp, state, {'file': 'hello.js', 'content': text})
+      ctrl.code(patch, state, {'file': 'hello.js', 'content': text})
       assert.equal('Foo', state.files[0].content)
     })
   })
