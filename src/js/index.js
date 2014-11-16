@@ -1,7 +1,7 @@
 var diff = require('virtual-dom/diff')
   , patch = require('virtual-dom/patch')
   , createElement = require('virtual-dom/create-element')
-  , _ = require('lodash')
+  , debounce = require('debounce')
   , raf = require('raf')
   , data = require('./data')
   , ctrl = require('./ctrl')
@@ -43,7 +43,7 @@ if(!room) {
   conn.on('leave', ctrl.leave.bind(null, state))
   conn.on('change-nick', ctrl.changeNick.bind(null, state))
   conn.on('code', ctrl.code.bind(null, p, state))
-  conn.on('cursor', _.debounce(ctrl.cursor.bind(null, state), 100))
+  conn.on('cursor', debounce(ctrl.cursor.bind(null, state), 100))
   conn.connect(room)
 
   setInterval(function() {

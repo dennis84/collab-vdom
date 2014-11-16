@@ -1,5 +1,4 @@
 var h = require('virtual-hyperscript')
-  , _ = require('lodash')
   , highlight = require('./highlight')
   , cursor = require('./cursor')
   , scrollTo = require('./scroll-to')
@@ -9,7 +8,7 @@ function pane(file, cursors, follow) {
   return h('div.pane', {
     'className': file.active ? '' : 'hidden',
     'scroll': hook(function(node) {
-      var firstCursor = _.first(cursors)
+      var firstCursor = cursors[0]
       if(undefined !== firstCursor && true === follow) {
         scrollTo(node, firstCursor.y)
       }

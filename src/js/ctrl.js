@@ -1,5 +1,4 @@
-var _ = require('lodash')
-  , d = require('./data')
+var d = require('./data')
 
 function opened(state, conn) {
   conn.send('members')
@@ -18,15 +17,15 @@ function members(state, data) {
 }
 
 function join(state, data) {
-  if(undefined === _.find(state.members, {'id': data.id})) {
+  if(undefined === find(state.members, data.id)) {
     state.members.push(d.member(data))
     state.emit('change', state)
   }
 }
 
 function leave(state, data) {
-  var member = _.find(state.members, {'id': data.id})
-    , cursor = _.find(state.cursors, {'id': data.id})
+  var member = find(state.members, data.id)
+    , cursor = find(state.cursors, data.id)
 
   if(undefined !== member) {
     var index = state.members.indexOf(member)
@@ -42,8 +41,8 @@ function leave(state, data) {
 }
 
 function changeNick(state, data) {
-  var member = _.find(state.members, {'id': data.id})
-    , cursor = _.find(state.cursors, {'id': data.id})
+  var member = find(state.members, data.id)
+    , cursor = find(state.cursors, data.id)
 
   if(undefined !== member) {
     member.name = data.name
@@ -57,7 +56,7 @@ function changeNick(state, data) {
 }
 
 function code(patch, state, data) {
-  var file = _.find(state.files, {'id': data.file})
+  var file = find(state.files, data.file)
   data.content = patch.patch((file || {}).content || '', data.content)
 
   if(undefined === file) {
@@ -71,8 +70,8 @@ function code(patch, state, data) {
 }
 
 function cursor(state, data, sender) {
-  var cursor = _.find(state.cursors, {'id': sender})
-    , member = _.find(state.members, {'id': sender})
+  var cursor = find(state.cursors, sender)
+    , member = find(state.members, sender)
 
   data.sender = sender
 
@@ -81,10 +80,14 @@ function cursor(state, data, sender) {
     member.coding = true
   }
 
+  data = d.cursor(data)
+
   if(undefined === cursor) {
-    state.cursors.push(d.cursor(data))
+    state.cursors.push(data)
   } else {
-    _.extend(cursor, d.cursor(data))
+    cursor.file = data.file
+    cursor.x = data.x
+    cursor.y = data.y
   }
 
   activateFile(state, data.file)
@@ -99,6 +102,14 @@ function showFile(state, file) {
 function follow(state, value) {
   state.follow = value
   state.emit('change', state)
+}
+
+function find(collection, id) {
+  for(i in collection) {
+    if(id === collection[i].id) {
+      return collection[i]
+    }
+  }
 }
 
 function activateFile(state, id, force) {
