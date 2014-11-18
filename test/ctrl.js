@@ -142,4 +142,13 @@ describe('ctrl', function() {
       assert.equal(false, state.files[2].active)
     })
   })
+
+  describe('follow', function() {
+    it('change the state', function() {
+      var state = d.state()
+      assert.equal(true, state.follow)
+      ctrl.follow(state, false)
+      assert.equal(false, state.follow)
+    })
+  })
 })

@@ -17,7 +17,7 @@ if(!room) {
   var state = data.state()
   var events = {
     'showFile': ctrl.showFile.bind(null, state),
-    'follow': ctrl.showFile.bind(null, state)
+    'follow': ctrl.follow.bind(null, state)
   }
 
   var conn = new Connection(require('./ws-url'))
