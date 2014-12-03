@@ -1,4 +1,4 @@
-var h = require('virtual-hyperscript')
+var h = require('virtual-dom/virtual-hyperscript')
 
 module.exports = function(conn, modal) {
   return h('div.modal.fade.in.bs-modal-sm#change-nick',

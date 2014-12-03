@@ -17,7 +17,6 @@
     "raf": "^2.0.4",
     "scroll": "0.0.3",
     "stringify": "^3.0.0",
-    "virtual-dom": "0.0.22",
-    "virtual-hyperscript": "^4.6.0"
+    "virtual-dom": "0.0.23"
   }
 }

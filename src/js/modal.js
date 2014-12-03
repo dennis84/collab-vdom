@@ -1,5 +1,5 @@
 var createElement = require('virtual-dom/create-element')
-  , h = require('virtual-hyperscript')
+  , h = require('virtual-dom/virtual-hyperscript')
 
 function Modal(view) {
   this.node = null

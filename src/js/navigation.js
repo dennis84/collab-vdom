@@ -1,4 +1,4 @@
-var h = require('virtual-hyperscript')
+var h = require('virtual-dom/virtual-hyperscript')
   , Modal = require('./modal')
   , changeNick = require('./change-nick')
 

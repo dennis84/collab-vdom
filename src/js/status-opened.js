@@ -1,4 +1,4 @@
-var h = require('virtual-hyperscript')
+var h = require('virtual-dom/virtual-hyperscript')
 
 module.exports = h('div.center-me',
   h('div', [
