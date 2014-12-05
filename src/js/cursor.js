@@ -1,4 +1,4 @@
-var h = require('virtual-dom/virtual-hyperscript')
+var h = require('virtual-dom/h')
 
 function getCursorTop(c) {
   return (c.y - 1) * 23 + 'px'

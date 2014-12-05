@@ -1,4 +1,4 @@
-var h = require('virtual-dom/virtual-hyperscript')
+var h = require('virtual-dom/h')
   , hljs = require('highlight.js')
   , hook = require('./hook')
 

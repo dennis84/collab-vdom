@@ -1,4 +1,4 @@
-var h = require('virtual-dom/virtual-hyperscript')
+var h = require('virtual-dom/h')
   , navigation = require('./navigation')
   , panes = require('./panes')
 

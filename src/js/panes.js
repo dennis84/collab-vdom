@@ -1,4 +1,4 @@
-var h = require('virtual-dom/virtual-hyperscript')
+var h = require('virtual-dom/h')
   , highlight = require('./highlight')
   , cursor = require('./cursor')
   , scrollTo = require('./scroll-to')
