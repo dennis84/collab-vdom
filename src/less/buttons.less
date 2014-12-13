@@ -7,11 +7,17 @@
   &:hover {
     background: darken(@base2, 10%);
   }
+  &:active,
+  &:focus {
+    outline: none !important;
+  }
 }
 
 .btn-primary {
   background: @violet;
-  &:hover {
+  &:hover,
+  &:active,
+  &:focus {
     background: lighten(@violet, 5%);
   }
 }
