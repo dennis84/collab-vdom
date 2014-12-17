@@ -1,26 +1,25 @@
 var gulp = require('gulp')
   , gutil = require('gulp-util')
-  , concat = require('gulp-concat')
-  , browserify = require('gulp-browserify')
+  , browserify = require('browserify')
+  , source = require('vinyl-source-stream')
+  , streamify = require('gulp-streamify')
   , less = require('gulp-less')
   , stringify = require('stringify')
   , uglify = require('gulp-uglify')
-  , minifyCSS = require('gulp-minify-css')
 
 gulp.task('js', function() {
-  gulp.src('src/js/index.js')
-    .pipe(browserify({
-      transform: stringify(['.html'])
-    })).on('error', gutil.log)
-    .pipe(uglify())
+  return browserify('./src/js/index.js')
+    .transform(stringify(['.html']))
+    .bundle()
+    .on('error', gutil.log)
+    .pipe(source('index.js'))
+    .pipe(streamify(uglify()))
     .pipe(gulp.dest('./assets/js'))
 })
 
 gulp.task('less', function() {
   gulp.src('src/less/index.less')
     .pipe(less({ compress: true })).on('error', gutil.log)
-    .pipe(concat('index.css'))
-    .pipe(minifyCSS())
     .pipe(gulp.dest('./assets/css'))
 })
 
