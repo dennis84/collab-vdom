@@ -4,9 +4,18 @@
 
 .hljs-title {
   color: @blue;
+  font-weight: 400;
 }
 
 .hljs-variable,
+.hljs-params {
+  color: @base0;
+}
+
+.hljs-type {
+  color: @magenta;
+}
+
 .hljs-attribute,
 .hljs-tag,
 .hljs-regexp,
@@ -21,12 +30,15 @@
   color: @red;
 }
 
+.hljs-preprocessor {
+  color: @red;
+  font-weight: 400;
+}
+
 .hljs-number,
-.hljs-preprocessor,
 .hljs-pragma,
 .hljs-built_in,
 .hljs-literal,
-.hljs-params,
 .hljs-constant {
   color: @orange;
 }
@@ -63,6 +75,7 @@
 .hljs-keyword,
 .javascript .hljs-function {
   color: @violet;
+  font-weight: 400;
 }
 
 .hljs {
