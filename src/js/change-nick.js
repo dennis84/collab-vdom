@@ -1,7 +1,7 @@
 var h = require('virtual-dom/h')
 
 module.exports = function(conn, modal) {
-  return h('div.modal.fade.in.bs-modal-sm#change-nick',
+  return h('div.modal.fade.in',
     h('div.modal-dialog.modal-sm',
       h('div.modal-content',
         h('form', {
