@@ -9,7 +9,7 @@ var gulp = require('gulp')
 
 gulp.task('js', function() {
   return browserify('./src/js/index.js')
-    .transform(stringify(['.html']))
+    .transform('brfs')
     .bundle()
     .on('error', gutil.log)
     .pipe(source('index.js'))

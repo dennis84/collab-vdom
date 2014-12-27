@@ -2,6 +2,7 @@
   "name": "collab-web",
   "description": "...",
   "dependencies": {
+    "brfs": "^1.2.0",
     "browserify": "^7.0.2",
     "debounce": "^1.0.0",
     "diff-match-patch": "^1.0.0",
@@ -15,7 +16,6 @@
     "mocha": "^2.0.1",
     "raf": "^2.0.4",
     "scroll": "0.0.3",
-    "stringify": "^3.0.0",
     "vinyl-source-stream": "^1.0.0",
     "virtual-dom": "0.0.23"
   }

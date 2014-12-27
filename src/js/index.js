@@ -11,8 +11,9 @@ var diff = require('virtual-dom/diff')
 var room = location.hash.substring(1)
 
 if(!room) {
-  var home = require('../html/home.html')
-  document.body.innerHTML = home
+  var fs = require('fs')
+  var html = fs.readFileSync(__dirname + '/../html/home.html', 'utf8')
+  document.body.innerHTML = html
 } else {
   var state = data.state()
   var events = {
