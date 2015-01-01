@@ -2,33 +2,22 @@
 @editor-line-height: 24px;
 
 .layout {
-  overflow: hidden;
   height: 100%;
-  padding-left: 320px;
-  left: 0;
 }
 
 @media (max-width: 767px) {
   .layout {
-    padding-left: 0px;
+    display: none;
   }
 }
 
 .editor-wrapper {
-  height: 100%;
   position: relative;
-}
-
-.status {
-  position: absolute;
+  margin-left: 320px;
   height: 100%;
-  width: 100%;
-  background: @base2;
-  z-index: 1;
 }
 
 .editor {
-  position: relative;
   height: 100%;
   font-size: @editor-font-size;
   line-height: @editor-line-height;

@@ -2,7 +2,7 @@ var h = require('virtual-dom/h')
   , navigation = require('./navigation')
   , panes = require('./panes')
 
-function statusScreen(state) {
+function editor(state) {
   if('open' === state.status && 0 === state.files.length) {
     return require('./status-opened')
   }
@@ -10,14 +10,13 @@ function statusScreen(state) {
   if('closed' === state.status) {
     return require('./status-closed')
   }
+
+  return panes(state)
 }
 
 module.exports = function(state, events, conn) {
   return h('div.layout', [
     navigation(state, events, conn),
-    h('div.editor-wrapper', [
-      statusScreen(state),
-      panes(state)
-    ])
+    h('div.editor-wrapper', editor(state))
   ])
 }
