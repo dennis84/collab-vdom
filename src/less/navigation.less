@@ -7,6 +7,7 @@
   font-size: 16px;
   padding: 20px;
   background: @base2;
+  overflow-y: auto;
 
   h3 {
     font-size: 24px;
@@ -41,4 +42,8 @@
   .navigation {
     left: -320px;
   }
+}
+
+.navigation::-webkit-scrollbar {
+  display: none;
 }
