@@ -50,9 +50,7 @@ module.exports = function(state, events, conn) {
         }, 'Change Nickname'))
     ]),
     h('h3', "Who's Online"),
-    h('ul.list-group', state.members.map(function(member) {
-      return makeMember(member)
-    })),
+    h('ul.list-group', state.members.map(makeMember)),
     h('h3', 'Files'),
     h('ul.list-group', state.files.map(function(file) {
       return makeFile(file, events)

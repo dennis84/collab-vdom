@@ -16,9 +16,7 @@ function pane(file, cursors, follow) {
   }, [
     h('pre.content', highlight(file)),
     h('div.filename', file.id),
-    h('div.cursors', cursors.map(function(c) {
-      return cursor(c)
-    }))
+    h('div.cursors', cursors.map(cursor))
   ])
 }
 
