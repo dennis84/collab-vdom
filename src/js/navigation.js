@@ -27,14 +27,15 @@ function makeMember(member) {
 module.exports = function(state, events, conn) {
   return h('div.navigation', [
     h('ul.list-group', [
-      h('li.list-group-item', [
+      h('li.list-group-item', {
+        'onclick': function(e) {
+          events.follow(!state.follow)
+        }
+      }, [
         'Follow',
         h('input.pull-right', {
           'type': 'checkbox',
-          'checked': state.follow,
-          'onclick': function(e) {
-            events.follow(!state.follow)
-          }
+          'checked': state.follow
         })
       ]),
       h('li.list-group-item', [
@@ -47,7 +48,8 @@ module.exports = function(state, events, conn) {
             var modal = new Modal(changeNick.bind(null, conn))
             modal.show()
           }
-        }, 'Change Nickname'))
+        }, 'Change Nickname')
+      )
     ]),
     h('h3', "Who's Online"),
     h('ul.list-group', state.members.map(makeMember)),
