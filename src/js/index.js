@@ -8,13 +8,12 @@ var diff = require('virtual-dom/diff')
   , Connection = require('./connection')
   , ContentPatch = require('./patch')
 
-var room = location.hash.substring(1)
-
-if(!room) {
+if(!location.hash.match(/^#\/.+/)) {
   var fs = require('fs')
   var html = fs.readFileSync(__dirname + '/../html/home.html', 'utf8')
   document.body.innerHTML = html
 } else {
+  var room = location.hash.substring(2)
   var state = data.state()
   var events = {
     'showFile': ctrl.showFile.bind(null, state),
