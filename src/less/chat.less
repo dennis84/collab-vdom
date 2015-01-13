@@ -1,0 +1,38 @@
+.chat {
+  position: relative;
+  height: 100%;
+  background: @base2;
+  padding-bottom: 80px;
+
+  .conversation {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .message {
+    width: 100%;
+    margin: 0;
+    padding: 10px 20px;
+
+    .author {
+      margin-right: 10px;
+      &::after {
+        content: ":"
+      }
+    }
+  }
+
+  .input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    height: 80px;
+
+    input {
+      width: 100%;
+      resize: none;
+    }
+  }
+}

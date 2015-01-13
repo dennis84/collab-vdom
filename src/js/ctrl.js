@@ -52,6 +52,10 @@ function changeNick(state, data) {
     cursor.nick = data.name
   }
 
+  state.messages.map(function(message) {
+    message.nick = data.name
+  })
+
   state.emit('change', state)
 }
 
@@ -104,6 +108,22 @@ function follow(state, value) {
   state.emit('change', state)
 }
 
+function message(state, data, sender) {
+  var member = find(state.members, sender)
+  if(undefined !== member) {
+    data.nick = member.name
+  }
+
+  data.sender = sender
+  state.messages.push(d.message(data))
+  state.emit('change', state)
+}
+
+function toggleChat(state) {
+  state.chat = !state.chat
+  state.emit('change', state)
+}
+
 function find(collection, id) {
   for(i in collection) {
     if(id === collection[i].id) {
@@ -135,4 +155,6 @@ module.exports = {
 , 'cursor': cursor
 , 'showFile': showFile
 , 'follow': follow
+, 'message': message
+, 'toggleChat': toggleChat
 }

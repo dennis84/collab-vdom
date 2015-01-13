@@ -49,7 +49,14 @@ module.exports = function(state, events, conn) {
             modal.show()
           }
         }, 'Change Nickname')
-      )
+      ),
+      h('li.list-group-item', [
+        h('a.link', {
+          'onclick': function(e) {
+            events.toggleChat()
+          }
+        }, 'Chat')
+      ]),
     ]),
     h('h3', "Who's Online"),
     h('ul.list-group', state.members.map(makeMember)),

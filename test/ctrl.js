@@ -75,9 +75,11 @@ describe('ctrl', function() {
       var state = d.state()
       state.members = [d.member({'id': 1, 'name': 'foo'})]
       state.cursors = [d.cursor({'sender': 1, 'file': '', 'x': 1, 'y': 1})]
+      state.messages = [d.message({'sender': 1, 'text': ''})]
       ctrl.changeNick(state, {'id': 1, 'name': 'bar'})
       assert.equal('bar', state.members[0].name)
       assert.equal('bar', state.cursors[0].nick)
+      assert.equal('bar', state.messages[0].nick)
     })
   })
 
@@ -149,6 +151,18 @@ describe('ctrl', function() {
       assert.equal(true, state.follow)
       ctrl.follow(state, false)
       assert.equal(false, state.follow)
+    })
+  })
+
+  describe('message', function() {
+    it('adds a message', function() {
+      var state = d.state()
+      ctrl.message(state, {'text': 'a'}, 1)
+      assert.equal('a', state.messages[0].text)
+      assert.equal(1, state.messages[0].author)
+      assert.equal(1, state.messages[0].nick)
+      ctrl.message(state, {'text': 'b'}, 2)
+      assert.equal('b', state.messages[1].text)
     })
   })
 })

@@ -6,7 +6,9 @@ function state() {
     files: [],
     cursors: [],
     status: null,
-    follow: true
+    follow: true,
+    chat: false,
+    messages: []
   })
 }
 
@@ -38,9 +40,18 @@ function cursor(data) {
   }
 }
 
+function message(data) {
+  return {
+    author: data.sender,
+    nick: data.nick || data.sender,
+    text: data.text
+  }
+}
+
 module.exports = {
   state: state
 , member: member
 , file: file
 , cursor: cursor
+, message: message
 }

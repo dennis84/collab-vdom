@@ -1,8 +1,13 @@
 var h = require('virtual-dom/h')
   , navigation = require('./navigation')
   , panes = require('./panes')
+  , chat = require('./chat')
 
-function editor(state) {
+function editor(state, conn) {
+  if(true === state.chat) {
+    return chat(state, conn)
+  }
+
   if('open' === state.status && 0 === state.files.length) {
     return require('./status-opened')
   }
@@ -17,6 +22,6 @@ function editor(state) {
 module.exports = function(state, events, conn) {
   return h('div.layout', [
     navigation(state, events, conn),
-    h('div.editor-wrapper', editor(state))
+    h('div.editor-wrapper', editor(state, conn))
   ])
 }

@@ -17,7 +17,8 @@ if(!location.hash.match(/^#\/.+/)) {
   var state = data.state()
   var events = {
     'showFile': ctrl.showFile.bind(null, state),
-    'follow': ctrl.follow.bind(null, state)
+    'follow': ctrl.follow.bind(null, state),
+    'toggleChat': ctrl.toggleChat.bind(null, state)
   }
 
   var conn = new Connection(require('./ws-url'))
@@ -44,6 +45,7 @@ if(!location.hash.match(/^#\/.+/)) {
   conn.on('change-nick', ctrl.changeNick.bind(null, state))
   conn.on('code', ctrl.code.bind(null, p, state))
   conn.on('cursor', debounce(ctrl.cursor.bind(null, state), 100))
+  conn.on('message', ctrl.message.bind(null, state))
   conn.connect(room)
 
   setInterval(function() {
