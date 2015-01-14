@@ -1,6 +1,7 @@
 var h = require('virtual-dom/h')
   , scroll = require('scroll')
   , hook = require('./hook')
+  , autofocus = require('./autofocus')
 
 function makeMessage(message) {
   return h('li.message.media', h('div.media-body', [
@@ -17,7 +18,7 @@ module.exports = function(state, conn) {
       })
     }, h('ul.messages.media-list', state.messages.map(makeMessage))),
     h('div.input', h('input.form-control.input-lg', {
-      'autofocus': true,
+      'autofocus': autofocus,
       'placeholder': 'Send a message ...',
       'onkeypress': function(e) {
         if(13 === e.keyCode) {
