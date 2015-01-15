@@ -116,11 +116,17 @@ function message(state, data, sender) {
 
   data.sender = sender
   state.messages.push(d.message(data))
+
+  if(false === state.chat) {
+    state.unreadMessages ++
+  }
+
   state.emit('change', state)
 }
 
 function toggleChat(state) {
   state.chat = !state.chat
+  state.unreadMessages = 0
   state.emit('change', state)
 }
 

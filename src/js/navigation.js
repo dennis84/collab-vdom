@@ -55,7 +55,7 @@ module.exports = function(state, events, conn) {
           'onclick': function(e) {
             events.toggleChat()
           }
-        }, 'Chat')
+        }, ['Chat', h('span.label.label-default.pull-right', String(state.unreadMessages))])
       ]),
     ]),
     h('h3', "Who's Online"),

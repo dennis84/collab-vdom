@@ -8,7 +8,8 @@ function state() {
     status: null,
     follow: true,
     chat: false,
-    messages: []
+    messages: [],
+    unreadMessages: 0
   })
 }
 
