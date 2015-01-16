@@ -157,12 +157,18 @@ describe('ctrl', function() {
   describe('message', function() {
     it('adds a message', function() {
       var state = d.state()
+      assert.equal(0, state.unreadMessages)
+
       ctrl.message(state, {'text': 'a'}, 1)
       assert.equal('a', state.messages[0].text)
       assert.equal(1, state.messages[0].author)
       assert.equal(1, state.messages[0].nick)
+      assert.equal(1, state.unreadMessages)
       ctrl.message(state, {'text': 'b'}, 2)
       assert.equal('b', state.messages[1].text)
+
+      ctrl.toggleChat(state)
+      assert.equal(0, state.unreadMessages)
     })
   })
 })
