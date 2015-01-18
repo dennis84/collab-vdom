@@ -1,14 +1,30 @@
 var d = require('./data')
 
-function opened(state, conn) {
+function opened(state, storage, conn) {
   conn.send('members')
   state.status = 'open'
+
+  var old = storage.get('state')
+  if(undefined !== old) {
+    state.follow = old.follow
+    state.chat = old.chat
+    state.messages = old.messages
+    conn.send('change-nick', {'name': old.nick})
+  }
+
   state.emit('change', state)
 }
 
-function closed(state, conn) {
+function closed(state, storage) {
   state.status = 'closed'
   state.emit('change', state)
+  var me = findMe(state.members)
+  storage.set('state', {
+    'follow': state.follow,
+    'chat': state.chat,
+    'messages': state.messages,
+    'nick': (me || {}).name
+  })
 }
 
 function members(state, data) {
@@ -134,6 +150,14 @@ function find(collection, id) {
   for(i in collection) {
     if(id === collection[i].id) {
       return collection[i]
+    }
+  }
+}
+
+function findMe(members) {
+  for(i in members) {
+    if(true === members[i].me) {
+      return members[i]
     }
   }
 }

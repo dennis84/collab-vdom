@@ -7,6 +7,7 @@ var diff = require('virtual-dom/diff')
   , ctrl = require('./ctrl')
   , Connection = require('./connection')
   , ContentPatch = require('./patch')
+  , Storage = require('./storage')
 
 if(!location.hash.match(/^#\/.+/)) {
   var fs = require('fs')
@@ -37,8 +38,10 @@ if(!location.hash.match(/^#\/.+/)) {
   })
 
   var p = new ContentPatch
-  conn.on('opened', ctrl.opened.bind(null, state))
-  conn.on('closed', ctrl.closed.bind(null, state))
+    , storage = new Storage(window.localStorage)
+
+  conn.on('opened', ctrl.opened.bind(null, state, storage))
+  conn.on('closed', ctrl.closed.bind(null, state, storage))
   conn.on('members', ctrl.members.bind(null, state))
   conn.on('join', ctrl.join.bind(null, state))
   conn.on('leave', ctrl.leave.bind(null, state))
@@ -47,6 +50,8 @@ if(!location.hash.match(/^#\/.+/)) {
   conn.on('cursor', debounce(ctrl.cursor.bind(null, state), 100))
   conn.on('message', ctrl.message.bind(null, state))
   conn.connect(room)
+
+  window.onbeforeunload = ctrl.closed.bind(null, state, storage)
 
   setInterval(function() {
     conn.send('ping')

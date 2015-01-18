@@ -4,6 +4,8 @@ var assert = require('assert')
   , Patch = require('../src/js/patch')
   , ctrl = require('../src/js/ctrl')
   , d = require('../src/js/data')
+  , Storage = require('../src/js/storage')
+  , LocalStorage = require('./local-storage')
 
 describe('ctrl', function() {
   function Connection() {}
@@ -13,7 +15,8 @@ describe('ctrl', function() {
   describe('opened', function() {
     it('should change the state', function() {
       var state = d.state()
-      ctrl.opened(state, conn)
+        , storage = new Storage(new LocalStorage)
+      ctrl.opened(state, storage, conn)
       assert.equal('open', state.status)
     })
   })
@@ -21,7 +24,8 @@ describe('ctrl', function() {
   describe('closed', function() {
     it('should change the state', function() {
       var state = d.state()
-      ctrl.closed(state, conn)
+        , storage = new Storage(new LocalStorage)
+      ctrl.closed(state, storage)
       assert.equal('closed', state.status)
     })
   })
