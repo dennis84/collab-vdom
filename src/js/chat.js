@@ -10,13 +10,23 @@ function makeMessage(message) {
   ]))
 }
 
+function conversation(messages) {
+  if(0 === messages.length) {
+    return h('div.center-me', [
+      h('h3', 'There are currently no messages.')
+    ])
+  }
+
+  return h('div.conversation', {
+    'scroll': hook(function(node) {
+      scroll.top(node, 10000000000)
+    })
+  }, h('ul.messages.media-list', messages.map(makeMessage)))
+}
+
 module.exports = function(state, conn) {
   return h('div.chat', [
-    h('div.conversation', {
-      'scroll': hook(function(node) {
-        scroll.top(node, 10000000000)
-      })
-    }, h('ul.messages.media-list', state.messages.map(makeMessage))),
+    conversation(state.messages),
     h('div.input', h('input.form-control.input-lg', {
       'autofocus': autofocus,
       'placeholder': 'Send a message ...',
