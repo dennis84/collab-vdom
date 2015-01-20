@@ -1,6 +1,5 @@
 var h = require('virtual-dom/h')
-  , highlight = require('./highlight')
-  , cursor = require('./cursor')
+  , content = require('./content')
   , scrollTo = require('./scroll-to')
   , hook = require('./hook')
 
@@ -13,10 +12,7 @@ function pane(file, cursors, follow) {
         scrollTo(node, firstCursor.y)
       }
     })
-  }, [
-    h('pre.content', highlight(file)),
-    h('div.cursors', cursors.map(cursor))
-  ])
+  }, content(file, cursors))
 }
 
 module.exports = function(state) {

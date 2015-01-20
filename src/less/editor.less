@@ -19,53 +19,47 @@
 
 .editor {
   height: 100%;
-  font-size: @editor-font-size;
-  line-height: @editor-line-height;
-  font-family: 'SourceCodePro';
-  font-weight: 300;
+
+  pre, pre > code {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+    word-wrap: normal;
+    white-space: pre;
+    tab-size: 1;
+    font-size: @editor-font-size;
+    line-height: @editor-line-height;
+    font-family: 'SourceCodePro';
+    font-weight: 300;
+  }
 
   .pane {
     position: absolute;
     height: 100%;
     width: 100%;
-    overflow: auto;
-
-    pre, pre > code {
-      margin: 0;
-      padding: 0;
-      padding-left: 1ch;
-      border-radius: 0;
-      border: 0;
-      word-wrap: normal;
-      white-space: pre;
-      tab-size: 1;
-      font-size: @editor-font-size;
-      line-height: @editor-line-height;
-      font-family: 'SourceCodePro';
-      font-weight: 300;
-    }
-
-    pre > code {
-      position: relative;
-      padding-bottom: 50%;
-      min-height: 100%;
-    }
+    overflow-x: hidden;
+    overflow-y: auto;
 
     .content {
-      position: relative;
-      padding-left: 7ch;
-      counter-reset: linenumber;
-      height: 100%;
-      width: 100%;
-      background: @base2;
-      overflow: visible;
+      background: @base3;
+
+      .highlight {
+        display: block;
+        height: 100%;
+
+        .code {
+          position: relative;
+          overflow-x: auto;
+          min-height: 100%;
+        }
+      }
     }
 
     .cursor-container {
       position: absolute;
       top: 0;
       left: 0;
-      margin-left: 8ch;
 
       .cursor {
         position: absolute;
@@ -86,7 +80,6 @@
         .tooltip-arrow {
           border-right-color: @base03;
         }
-
         .tooltip-inner {
           background: @base03;
           text-shadow: 0 -1px darken(@base03, 20%);
@@ -99,14 +92,14 @@
       }
     }
 
-    .line-numbers-rows {
+    .line-numbers {
+      float: left;
       border-right: 1px solid darken(@base2, 10%);
-      position: absolute;
       pointer-events: none;
       background: @base2;
       top: 0;
-      left: -7ch;
       width: 7ch;
+      margin-right: 1ch;
       min-height: 100%;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -114,13 +107,13 @@
       user-select: none;
     }
 
-    .line-numbers-rows > span {
+    .line-numbers > span {
       pointer-events: none;
       display: block;
       counter-increment: linenumber;
     }
 
-    .line-numbers-rows > span:before {
+    .line-numbers > span:before {
       content: counter(linenumber);
       color: @base1;
       display: block;

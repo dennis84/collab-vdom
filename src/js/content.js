@@ -1,10 +1,11 @@
 var h = require('virtual-dom/h')
   , hljs = require('highlight.js')
   , hook = require('./hook')
+  , cursor = require('./cursor')
 
 function makeLineNumbers(code) {
   var lines = code.split("\n")
-  return h('span.line-numbers-rows', lines.map(function(ln) {
+  return h('div.line-numbers', lines.map(function(ln) {
     return h('span')
   }))
 }
@@ -17,13 +18,14 @@ function highlightCode(file) {
   return hljs.highlightAuto(file.content)
 }
 
-module.exports = function(file) {
-  return h('code.hljs', [
-    h('span', {
-      'html': hook(function(node) {
+module.exports = function(file, cursors) {
+  return h('pre.content', h('code.highlight', [
+    makeLineNumbers(file.content),
+    h('div.code', [
+      h('div', {'html': hook(function(node) {
         node.innerHTML = highlightCode(file).value
-      })
-    }),
-    makeLineNumbers(file.content)
-  ])
+      })}),
+      h('div.cursors', cursors.map(cursor))
+    ]) 
+  ]))
 }
