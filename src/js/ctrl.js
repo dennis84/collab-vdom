@@ -69,7 +69,9 @@ function changeNick(state, data) {
   }
 
   state.messages.map(function(message) {
-    message.nick = data.name
+    if(data.id === message.author) {
+      message.nick = data.name
+    }
   })
 
   state.emit('change', state)
@@ -125,13 +127,19 @@ function follow(state, value) {
 }
 
 function message(state, data, sender) {
-  var member = find(state.members, sender)
-  if(undefined !== member) {
-    data.nick = member.name
-  }
+  var last = state.messages[state.messages.length - 1]
+  if(last && sender == last.author) {
+    last.text += "\n" + data.text
+    last.createdAt = Date.now()
+  } else {
+    var member = find(state.members, sender)
+    if(undefined !== member) {
+      data.nick = member.name
+    }
 
-  data.sender = sender
-  state.messages.push(d.message(data))
+    data.sender = sender
+    state.messages.push(d.message(data))
+  }
 
   if(false === state.chat) {
     state.unreadMessages ++

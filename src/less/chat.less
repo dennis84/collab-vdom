@@ -16,11 +16,19 @@
 
   .message {
     width: 100%;
-    .author {
-      margin-right: 10px;
-      &::after {
-        content: ":"
-      }
+    margin-top: 20px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .created-at {
+      margin-left: 10px;
+      color: @base1;
+    }
+
+    .text {
+      white-space: pre-wrap;
     }
   }
 

@@ -3,10 +3,24 @@ var h = require('virtual-dom/h')
   , hook = require('./hook')
   , autofocus = require('./autofocus')
 
+function humanize(timestamp) {
+  var diff = (Date.now() - timestamp) / 1000
+  if(diff < 60) return 'now'
+  var minutes = Math.floor(diff / 60)
+  if(1 === minutes) return 'about a minute ago'
+  var houres = Math.floor(minutes / 60)
+  if(0 === houres) return minutes + ' minutes ago'
+  if(1 === houres) return 'about an hour ago'
+  return houres + ' houres ago'
+}
+
 function makeMessage(message) {
-  return h('li.message.media', h('div.media-body', [
-    h('b.author', message.nick),
-    h('span.text', message.text)
+  return h('li.message', h('div', [
+    h('div', [
+      h('b.author', message.nick),
+      h('span.created-at', humanize(message.createdAt))
+    ]),
+    h('div.text', message.text)
   ]))
 }
 

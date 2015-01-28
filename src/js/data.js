@@ -45,7 +45,8 @@ function message(data) {
   return {
     author: data.sender,
     nick: data.nick || data.sender,
-    text: data.text
+    text: data.text,
+    createdAt: Date.now()
   }
 }
 
