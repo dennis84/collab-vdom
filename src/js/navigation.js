@@ -42,14 +42,6 @@ module.exports = function(state, events, conn) {
         'Online',
         h('span.label.label-primary.pull-right', String(state.members.length))
       ]),
-      h('li.list-group-item',
-        h('a.link', {
-          'onclick': function(e) {
-            var modal = new Modal(changeNick.bind(null, conn))
-            modal.show()
-          }
-        }, 'Change Nickname')
-      ),
       h('li.list-group-item', [
         h('a.link', {
           'onclick': function(e) {
@@ -57,6 +49,14 @@ module.exports = function(state, events, conn) {
           }
         }, ['Chat', h('span.label.label-default.pull-right', String(state.unreadMessages))])
       ]),
+      h('li.list-group-item',
+        h('a.link', {
+          'onclick': function(e) {
+            var modal = new Modal(changeNick.bind(null, conn))
+            modal.show()
+          }
+        }, 'Change Nickname')
+      )
     ]),
     h('h3', "Who's Online"),
     h('ul.list-group', state.members.map(makeMember)),
