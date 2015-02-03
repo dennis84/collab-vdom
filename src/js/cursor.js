@@ -20,6 +20,7 @@ module.exports = function(cursor) {
       h('div.tooltip-arrow'),
       h('div.tooltip-inner', cursor.nick || cursor.id)
     ]),
+    h('div.line', {'style': {'left': '-' + getCursorLeft(cursor)}}),
     h('div.cursor')
   ])
 }

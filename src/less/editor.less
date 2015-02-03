@@ -54,6 +54,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
 
       .cursor {
         position: absolute;
@@ -64,6 +65,15 @@
         -moz-animation: blink 0.8s linear 0s infinite;
         -ms-animation: blink 0.8s linear 0s infinite;
         -o-animation: blink 0.8s linear 0s infinite;
+      }
+
+      .line {
+        position: absolute;
+        height: @editor-line-height;
+        left: 0;
+        right: 0;
+        background: @base03;
+        opacity: 0.05;
       }
 
       .tooltip {
