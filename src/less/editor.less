@@ -36,8 +36,9 @@
     .content {
       background: @base3;
       display: table;
+      table-layout: fixed;
       min-height: 100%;
-      min-width: 100%;
+      width: 100%;
 
       .highlight {
         display: table-cell;
@@ -102,7 +103,7 @@
       pointer-events: none;
       background: @base2;
       margin-right: 1ch;
-      margin-left: 1ch;
+      padding-left: 1ch;
       height: 100%;
       -webkit-user-select: none;
       -moz-user-select: none;
