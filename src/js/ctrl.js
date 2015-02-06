@@ -29,6 +29,7 @@ function closed(state, storage) {
 
 function members(state, data) {
   state.members = data.map(d.member)
+  state.me = findMe(state.members) || {}
   state.emit('change', state)
 }
 

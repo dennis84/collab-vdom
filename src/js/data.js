@@ -3,6 +3,7 @@ var emitter = require('emitter-component')
 function state() {
   return emitter({
     members: [],
+    me: {},
     files: [],
     cursors: [],
     status: null,

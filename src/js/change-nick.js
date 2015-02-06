@@ -1,7 +1,7 @@
 var h = require('virtual-dom/h')
   , autofocus = require('./autofocus')
 
-module.exports = function(conn, modal) {
+module.exports = function(member, conn, modal) {
   return h('div.modal.fade.in',
     h('div.modal-dialog.modal-sm',
       h('div.modal-content',
@@ -17,7 +17,10 @@ module.exports = function(conn, modal) {
         }, [
           h('div.modal-body', [
             h('label', 'Nickname'),
-            h('input.form-control.input-lg', {'autofocus': autofocus})
+            h('input.form-control.input-lg', {
+              'autofocus': autofocus,
+              'value': member.name
+            })
           ]),
           h('div.modal-footer', [
             h('button.btn.btn-default', {
