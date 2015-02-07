@@ -36,6 +36,10 @@ describe('ctrl', function() {
       var members = [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}]
       ctrl.members(state, members)
       assert.equal(2, state.members.length)
+      assert.deepEqual({}, state.me)
+      var members = [{id: 1, name: 'foo', me: true}, {id: 2, name: 'bar'}]
+      ctrl.members(state, members)
+      assert.deepEqual(state.members[0], state.me)
     })
   })
 
@@ -77,13 +81,14 @@ describe('ctrl', function() {
   describe('changeNick', function() {
     it('should change the nickname', function() {
       var state = d.state()
-      state.members = [d.member({'id': 1, 'name': 'foo'})]
+      ctrl.members(state, [{'id': 1, 'name': 'foo', 'me': true}])
       state.cursors = [d.cursor({'sender': 1, 'file': '', 'x': 1, 'y': 1})]
       state.messages = [d.message({'sender': 1, 'text': ''})]
       ctrl.changeNick(state, {'id': 1, 'name': 'bar'})
       assert.equal('bar', state.members[0].name)
       assert.equal('bar', state.cursors[0].nick)
       assert.equal('bar', state.messages[0].nick)
+      assert.equal('bar', state.me.name)
     })
   })
 

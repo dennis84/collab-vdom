@@ -18,12 +18,11 @@ function opened(state, storage, conn) {
 function closed(state, storage) {
   state.status = 'closed'
   state.emit('change', state)
-  var me = findMe(state.members)
   storage.set('state', {
     'follow': state.follow,
     'chat': state.chat,
     'messages': state.messages,
-    'nick': (me || {}).name
+    'nick': state.me.name
   })
 }
 
