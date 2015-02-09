@@ -4,7 +4,6 @@ var gulp = require('gulp')
   , source = require('vinyl-source-stream')
   , streamify = require('gulp-streamify')
   , less = require('gulp-less')
-  , stringify = require('stringify')
   , uglify = require('gulp-uglify')
 
 gulp.task('js', function() {
