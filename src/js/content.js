@@ -2,6 +2,7 @@ var h = require('virtual-dom/h')
   , hljs = require('highlight.js')
   , hook = require('./hook')
   , cursor = require('./cursor')
+  , Thunk = require('vdom-thunk')
 
 function makeLineNumbers(code) {
   var lines = code.split("\n")
@@ -10,21 +11,25 @@ function makeLineNumbers(code) {
   }))
 }
 
-function highlightCode(file) {
+function highlightCode(file, fn) {
   if(hljs.getLanguage(file.lang)) {
-    return hljs.highlight(file.lang, file.content)
+    return hljs.highlight(file.lang, file.content).value
   }
 
-  return hljs.highlightAuto(file.content)
+  return hljs.highlightAuto(file.content).value
+}
+
+function code(file) {
+  return h('div', {'html': hook(function(node) {
+    node.innerHTML = highlightCode(file)
+  })})
 }
 
 module.exports = function(file, cursors) {
   return h('pre.content', h('code.highlight', [
     makeLineNumbers(file.content),
     h('div.code', [
-      h('div', {'html': hook(function(node) {
-        node.innerHTML = highlightCode(file).value
-      })}),
+      Thunk(code, file),
       h('div.cursors', cursors.map(cursor))
     ]) 
   ]))
