@@ -1,4 +1,5 @@
 var d = require('./data')
+  , clone = require('clone')
 
 function opened(state, storage, conn) {
   conn.send('members')
@@ -78,13 +79,16 @@ function changeNick(state, data) {
 }
 
 function code(patch, state, data) {
-  var file = find(state.files, data.file)
+  var index = findIndex(state.files, data.file)
+    , file = clone(state.files[index])
+
   data.content = patch.patch((file || {}).content || '', data.content)
 
   if(undefined === file) {
     state.files.push(d.file(data))
   } else {
     file.content = data.content
+    state.files[i] = file
   }
 
   activateFile(state, data.file)
@@ -159,6 +163,12 @@ function find(collection, id) {
     if(id === collection[i].id) {
       return collection[i]
     }
+  }
+}
+
+function findIndex(collection, id) {
+  for(i in collection) {
+    if(id === collection[i].id) return i
   }
 }
 
