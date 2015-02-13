@@ -80,13 +80,14 @@ function changeNick(state, data) {
 
 function code(patch, state, data) {
   var index = findIndex(state.files, data.file)
-    , file = clone(state.files[index])
+    , file = state.files[index]
 
   data.content = patch.patch((file || {}).content || '', data.content)
 
   if(undefined === file) {
     state.files.push(d.file(data))
   } else {
+    file = clone(file)
     file.content = data.content
     state.files[i] = file
   }
