@@ -82,13 +82,11 @@ function code(patch, state, data) {
   var index = findIndex(state.files, data.file)
     , file = state.files[index]
 
-  data.content = patch.patch((file || {}).content || '', data.content)
-
   if(undefined === file) {
     state.files.push(d.file(data))
   } else {
     file = clone(file)
-    file.content = data.content
+    file.content = patch.patch(file.content, data.content)
     state.files[i] = file
   }
 
