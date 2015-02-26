@@ -1,4 +1,5 @@
 var emitter = require('emitter-component')
+  , parse = require('./parse-message')
 
 function Connection(url) {
   this.url = url
@@ -19,18 +20,8 @@ Connection.prototype.connect = function(room) {
   }
 
   this.ws.onmessage = function(e) {
-    var pos = e.data.search(/[{\[]/)
-      , evt = e.data.substring(0, pos)
-      , data = e.data.substring(pos)
-      , sender = undefined
-
-    if(-1 != evt.indexOf('@')) {
-      var info = evt.split('@')
-      evt = info[0]
-      sender = info[1]
-    }
-
-    connection.emit(evt, JSON.parse(data), sender)
+    var res = parse(e.data)
+    connection.emit(res.event, res.data, res.sender)
   }
 }
 
