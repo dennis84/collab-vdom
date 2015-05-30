@@ -1,5 +1,5 @@
 var h = require('virtual-dom/h')
-  , Modal = require('./modal')
+  , modal = require('./modal')
   , changeNick = require('./change-nick')
 
 function makeFile(file, events) {
@@ -52,8 +52,7 @@ module.exports = function(state, events, conn) {
       h('li.list-group-item',
         h('a.link', {
           'onclick': function(e) {
-            var modal = new Modal(changeNick.bind(null, state.me, conn))
-            modal.show()
+            modal(changeNick.bind(null, state.me, conn))
           }
         }, 'Change Nickname')
       )

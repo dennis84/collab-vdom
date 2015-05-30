@@ -1,7 +1,7 @@
 var h = require('virtual-dom/h')
   , autofocus = require('./autofocus')
 
-module.exports = function(member, conn, modal) {
+module.exports = function(member, conn, close) {
   return h('div.modal.fade.in',
     h('div.modal-dialog.modal-sm',
       h('div.modal-content',
@@ -11,7 +11,7 @@ module.exports = function(member, conn, modal) {
             var nick = e.target.querySelector('input').value.trim()
             if('' !== nick) {
               conn.send('change-nick', {'name': nick})
-              modal.hide()
+              close()
             }
           }
         }, [
@@ -26,7 +26,7 @@ module.exports = function(member, conn, modal) {
             h('button.btn.btn-default', {
               'type': 'button',
               'onclick': function(e) {
-                modal.hide()
+                close()
               }
             }, 'Close'),
             h('button.btn.btn-primary', {'type': 'submit'}, 'Apply')

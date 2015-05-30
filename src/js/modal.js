@@ -1,30 +1,20 @@
 var createElement = require('virtual-dom/create-element')
   , h = require('virtual-dom/h')
 
-function Modal(view) {
-  this.node = null
-  this.view = h('div', [
-    view(this),
-    h('div.modal-backdrop.fade.in')
-  ])
-}
+function modal(render) {
+  var node, close = function() {
+    if(node) node.remove()
+  }
 
-Modal.prototype.show = function() {
-  var modal = this
-  this.node = createElement(this.view)
-  this.node.addEventListener('click', function(e) {
+  var view = h('div', [render(close), h('div.modal-backdrop.fade.in')])
+  node = createElement(view)
+  node.addEventListener('click', function(e) {
     if(e.target.classList.contains('modal')) {
-      modal.hide()
+      close()
     }
   })
 
-  document.body.appendChild(this.node)
+  document.body.appendChild(node)
 }
 
-Modal.prototype.hide = function() {
-  if(null !== this.node) {
-    this.node.remove()
-  }
-}
-
-module.exports = Modal
+module.exports = modal
