@@ -9,7 +9,12 @@ function modal(render) {
   var view = h('div', [render(close), h('div.modal-backdrop.fade.in')])
   node = createElement(view)
   node.addEventListener('click', function(e) {
-    if(e.target.classList.contains('modal')) {
+    if(e.target.classList.contains('modal')) close()
+  })
+
+  document.addEventListener('keydown', function esc(e) {
+    if(27 === e.keyCode) {
+      document.removeEventListener('keydown', esc)
       close()
     }
   })
