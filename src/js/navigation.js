@@ -47,9 +47,12 @@ module.exports = function(state, events, conn) {
           'onclick': function(e) {
             events.toggleChat()
           }
-        }, ['Chat', h('span.label.pull-right', {
-          'className': state.unreadMessages > 0 ? 'label-primary' : 'label-default'
-        }, String(state.unreadMessages))])
+        }, [
+          state.chat ? 'Hide Chat' : 'Show Chat',
+          h('span.label.pull-right', {
+            'className': state.unreadMessages > 0 ? 'label-primary' : 'label-default'
+          }, String(state.unreadMessages))
+        ])
       ]),
       h('li.list-group-item',
         h('a.link', {
