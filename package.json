@@ -3,22 +3,23 @@
   "description": "...",
   "dependencies": {
     "brfs": "^1.4.0",
-    "browserify": "^10.2.3",
+    "browserify": "^10.2.4",
     "clone": "^1.0.2",
     "debounce": "^1.0.0",
     "diff-match-patch": "^1.0.0",
     "emitter-component": "^1.1.1",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-less": "^3.0.3",
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.4",
+    "gulp-util": "^3.0.5",
     "highlight.js": "^8.6.0",
     "mocha": "^2.2.5",
     "raf": "^3.0.0",
     "scroll": "0.0.3",
     "vdom-thunk": "^3.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "virtual-dom": "2.0.1"
+    "virtual-dom": "2.0.1",
+    "watchify": "^3.2.2"
   }
 }
